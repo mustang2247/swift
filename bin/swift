@@ -1,0 +1,179 @@
+#!/bin/sh
+
+# resolve links - "${BASH_SOURCE-$0}" may be a softlink
+this="${BASH_SOURCE-$0}"
+while [ -h "$this" ]; do
+  ls=`ls -ld "$this"`
+  link=`expr "$ls" : '.*-> \(.*\)$'`
+  if expr "$link" : '.*/.*' > /dev/null; then
+    this="$link"
+  else
+    this=`dirname "$this"`/"$link"
+  fi
+done
+
+# Get standard environment variables
+bin=`dirname "$this"`
+
+# Only set SWIFT_HOME if not already set
+[ -z "$SWIFT_HOME" ] && SWIFT_HOME=`cd "$bin/.." ; pwd`
+
+if [ -r "$SWIFT_HOME"/bin/swift-env.sh ]; then
+  BASEDIR="$SWIFT_HOME"
+  . "$SWIFT_HOME"/bin/swift-env.sh
+else
+  echo "Cannot find $SWIFT_HOME/bin/swift-env.sh"
+  echo "This file is needed to run this program"
+  exit 1
+fi
+
+if [ -x "$SWIFT_HOME"/bin/swift-env.sh ]; then
+  . "$SWIFT_HOME"/bin/swift-env.sh 
+fi
+
+# Now switch to home directory of echo
+cd $SWIFT_HOME
+
+if [ -z "$JAVA_OPTS" ]; then
+  JAVA_OPTS="-server -Xms2560m -Xprof -Xmx2560m -Xmn2g -XX:+UseParallelGC -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8 -Djcore.parser=SAX"
+else
+  JAVA_OPTS="$JAVA_OPTS -server -Xms2560m -Xprof -Xmx2560m -Xmn2g -XX:+UseParallelGC -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8"
+fi
+
+export SWIFT_PID=$SWIFT_HOME/swift.pid
+export SWIFT_MONITOR_PID=$SWIFT_HOME/swift-monitor.pid
+export SWIFT_PRGNAME="swift"
+
+check_process_exists()
+{
+  if [ -f "$SWIFT_PID" ]; then
+    pid=`cat $SWIFT_PID`
+    [ -z $pid ] &&  pid="-1"
+    kill -0 $pid > /dev/null 2>&1
+    find_pids=`ps aux | grep $SWIFT_PRGNAME | grep -v 'grep' | awk '{print $2}'`
+    for find_pid in $find_pids
+    do  
+      if [ $find_pid = $pid ]; then
+        echo "Process exists, can't start or run new process"
+        exit 0
+      fi  
+    done
+  fi
+}
+
+# if no args specified, show usage
+if [ $# -lt 1 ]; then
+  more <<'EOF'
++====================================================+
+|      Swift : a p2p website crawler                 |
++----------------------------------------------------+
+|Usage:   swift  <params>                            |
+|params:  start-local,     Start the local mode      |
+|         start-remote,    Start the remote mode     |
+|         stop,            Stop the swift            |
+|         restart-local,   ReStart the local mode    |
+|         restart-remote,  ReStart the remote mode   |
++====================================================+
+EOF
+  exit 1
+fi
+
+if [ "$1" = "start-local" ] ; then
+  check_process_exists
+  if [ ! -d "$SWIFT_HOME"/log ]; then
+    mkdir $SWIFT_HOME/log
+  fi
+  while true;
+  do
+    $SWIFT_HOME/bin/swift-monitor.sh $RUNJAVA -classpath $CLASSPATH $JAVA_OPTS com.ncfgroup.swift.Swift local
+    code=$?
+    #echo "Swift is terminated and exit code is " $code
+    if [ $code == 0 ]; then
+      exit $code
+    fi
+    echo "Swift is going to be restarted 5 seconds"
+    sleep 5;
+  done &
+  echo $! > $SWIFT_MONITOR_PID
+  echo "Start the local mode success."
+elif [ "$1" = "start-remote" ] ; then
+  check_process_exists
+  if [ ! -d "$SWIFT_HOME"/log ]; then
+    mkdir $SWIFT_HOME/log
+  fi
+  while true;
+  do
+    $SWIFT_HOME/bin/swift-monitor.sh $RUNJAVA -classpath $CLASSPATH $JAVA_OPTS com.ncfgroup.swift.Swift remote
+    code=$?
+    #echo "Swift is terminated and exit code is " $code
+    if [ $code == 0 ]; then
+      exit $code
+    fi
+    echo "Swift is going to be restarted 5 seconds"
+    sleep 5;
+  done &
+  echo $! > $SWIFT_MONITOR_PID
+  echo "Start the remote mode success."
+elif [ "$1" = "restart-local" ] ; then
+  if [ -f "$SWIFT_PID" ]; then
+    kill -9 `cat $SWIFT_MONITOR_PID` > /dev/null 2>&1 | xargs rm -rf $SWIFT_MONITOR_PID
+    kill -9 `cat $SWIFT_PID` > /dev/null 2>&1 | xargs rm -rf $SWIFT_PID
+    echo "Stop success."
+  else
+    ps -ef | grep $SWIFT_PRGNAME | awk '{print $2}' | xargs kill -9 > /dev/null 2>&1 &
+    #echo "Stop failed: $SWIFT_PID not exist"
+  fi
+  check_process_exists
+  if [ ! -d "$SWIFT_HOME"/log ]; then
+    mkdir $SWIFT_HOME/log
+  fi
+  while true;
+  do
+    $SWIFT_HOME/bin/swift-monitor.sh $RUNJAVA -classpath $CLASSPATH $JAVA_OPTS com.ncfgroup.swift.Swift local
+    code=$?
+    #echo "Swift is terminated and exit code is " $code
+    if [ $code == 0 ]; then
+      exit $code
+    fi
+    echo "Swift is going to be restarted 5 seconds"
+    sleep 5;
+  done &
+  echo $! > $SWIFT_MONITOR_PID
+  echo "ReStart the local mode success."
+elif [ "$1" = "restart-remote" ] ; then
+  if [ -f "$SWIFT_PID" ]; then
+    kill -9 `cat $SWIFT_MONITOR_PID` > /dev/null 2>&1 | xargs rm -rf $SWIFT_MONITOR_PID
+    kill -9 `cat $SWIFT_PID` > /dev/null 2>&1 | xargs rm -rf $SWIFT_PID
+    echo "Stop success."
+  else
+    ps -ef | grep $SWIFT_PRGNAME | awk '{print $2}' | xargs kill -9 > /dev/null 2>&1 &
+    #echo "Stop failed: $SWIFT_PID not exist"
+  fi
+  check_process_exists
+  if [ ! -d "$SWIFT_HOME"/log ]; then
+    mkdir $SWIFT_HOME/log
+  fi
+  while true;
+  do
+    $SWIFT_HOME/bin/swift-monitor.sh $RUNJAVA -classpath $CLASSPATH $JAVA_OPTS com.ncfgroup.swift.Swift remote
+    code=$?
+    #echo "Swift is terminated and exit code is " $code
+    if [ $code == 0 ]; then
+      exit $code
+    fi
+    echo "Swift is going to be restarted 5 seconds"
+    sleep 5;
+  done &
+  echo $! > $SWIFT_MONITOR_PID
+  echo "ReStart the remote mode success."
+elif [ "$1" = "stop" ] ; then
+  if [ -f "$SWIFT_PID" ]; then
+    kill -9 `cat $SWIFT_MONITOR_PID` > /dev/null 2>&1 | xargs rm -rf $SWIFT_MONITOR_PID
+    kill -9 `cat $SWIFT_PID` > /dev/null 2>&1 | xargs rm -rf $SWIFT_PID
+    echo "Stop success."
+  else
+    ps -ef | grep $SWIFT_PRGNAME | awk '{print $2}' | xargs kill -9 > /dev/null 2>&1 &
+    #echo "Stop failed: $SWIFT_PID not exist"
+  fi
+fi
+

@@ -1,0 +1,20 @@
+#!/usr/bin/expect
+set timeout -1
+set port [lindex $argv 0]
+set local_sub_dir [lindex $argv 1]
+set remote_user [lindex $argv 2]
+set remote_host [lindex $argv 3]
+set remote_parent_dir [lindex $argv 4]
+set remote_pwd [lindex $argv 5]
+set remote_dir [lindex $argv 6]
+
+spawn ssh $remote_user@$remote_host "mkdir -p $remote_dir" 
+expect "*?assword:*"
+send -- "$remote_pwd\r"
+send -- "\r"
+
+spawn scp -pr -P $port $local_sub_dir $remote_user@$remote_host:$remote_parent_dir
+expect "$remote_user@$remote_host's password:"
+send "$remote_pwd\r"
+send "exit\r"
+expect eof

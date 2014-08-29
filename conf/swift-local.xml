@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<swift>
+
+  <thread_num>1</thread_num>
+
+  <instance id="instance1">
+
+     <!-- 
+     <timer>
+       <interval>60</interval>
+       <start_time>2014-07-04 14:15:00</start_time>
+     </timer>
+-->
+
+     <http_proxy>
+     	218.207.195.206:80
+     </http_proxy>
+
+     <seeds>
+
+       <inside is_download="false" js_support="false" use_proxy="true" delay="0">
+			all
+       </inside>
+
+    <!-- 
+        <outside is_download="true" is_cascade="true"  depth="1" use_proxy="false" delay="0">
+        	http://www.niwodai.com/xiangmu/
+        </outside>
+-->
+     </seeds>
+
+     <storage>
+        <!-- thrift_server>10.20.9.14:9094</thrift_server -->
+        
+        <!-- for avatar,page, $swift_path/data/ by default -->
+        <disk is_sync="false" sync_domain="http://static.p2p800.com/">
+
+		</disk>
+     	<db>
+     	   <driver>com.mysql.jdbc.Driver</driver>
+	       <url>jdbc:mysql://localhost:3306/p2p?useUnicode=true&amp;characterEncoding=UTF-8</url>
+	       <!-- url>jdbc:mysql://10.18.6.91:3306/p2p?useUnicode=true&amp;characterEncoding=UTF-8</url -->
+	       <user_name>root</user_name>
+	       <password>root</password>
+	       <pool_size>10</pool_size>
+     	</db>
+     	<index>
+     	  /opt/swift/data/index
+     	</index>
+     </storage>
+
+  </instance>
+
+</swift>
