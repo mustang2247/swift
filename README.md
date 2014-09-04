@@ -3,7 +3,7 @@
 ![Image text](https://github.com/ganqiang1983/swift/blob/master/logo.jpg)
 
   What is it? <br />  
-  Swift是一个爬虫，
+  Swift是一个爬虫工具，
   
   1.支持单机和分布式两种运行模式（根据需求选择运行模式） <br /> 
   2.良好的编程接口可以方便抓取任何网站（新站点只需实现Fetch和Parse接口） <br /> 
