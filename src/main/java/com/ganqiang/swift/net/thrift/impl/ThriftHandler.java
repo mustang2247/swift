@@ -1,7 +1,13 @@
 package com.ganqiang.swift.net.thrift.impl;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.apache.http.HttpHost;
 import org.apache.log4j.Logger;
@@ -19,7 +25,9 @@ import com.ganqiang.swift.net.thrift.GlobalResponse;
 import com.ganqiang.swift.net.thrift.Job;
 import com.ganqiang.swift.net.thrift.JobCommand;
 import com.ganqiang.swift.net.thrift.JobResponse;
+import com.ganqiang.swift.net.thrift.PingResponse;
 import com.ganqiang.swift.net.thrift.SwiftController;
+import com.ganqiang.swift.net.zk.ZKContextHandler;
 import com.ganqiang.swift.prep.DelayContextHandler;
 import com.ganqiang.swift.prep.LifeCycleSettingHandler;
 import com.ganqiang.swift.seed.PageSizeSettingHandler;
@@ -27,7 +35,9 @@ import com.ganqiang.swift.storage.disk.DiskContextHandler;
 import com.ganqiang.swift.storage.index.LuceneContextHandler;
 import com.ganqiang.swift.timer.JobController;
 import com.ganqiang.swift.timer.JobScheduler;
+import com.ganqiang.swift.util.CalculateUtil;
 import com.ganqiang.swift.util.DateUtil;
+import com.sun.management.OperatingSystemMXBean;
 
 public class ThriftHandler implements SwiftController.Iface
 {
@@ -62,7 +72,7 @@ public class ThriftHandler implements SwiftController.Iface
         case CONTINUE:
           controller.continues();
           break;
-        case DESTORY:
+        case CANCEL:
           controller.destory(jobid);
           break;
       }
@@ -105,6 +115,54 @@ public class ThriftHandler implements SwiftController.Iface
     }
     new GlobalCommandExecutor(globalcommand).execute();
   }
+  
+  @Override
+  public PingResponse ping() throws TException {
+		  PingResponse res = new PingResponse();
+		  String osName = System.getProperty("os.name");
+		  res.setOs(osName);
+		  res.setCpurate(String.valueOf(getCpurate()));
+		  res.setMemrate(String.valueOf(getMemRate()));
+  		return res;
+  	 }
+  
+  public static String getMemRate(){ 
+		  OperatingSystemMXBean osmxb = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean(); 
+		  long total =  osmxb.getTotalPhysicalMemorySize() / 1024/1024;
+		  long free = osmxb.getFreePhysicalMemorySize() / 1024/1024 ;
+		  double d= CalculateUtil.div((total-free),total,4) * 100;
+		  return String.valueOf(d);
+	} 
+
+  public static String getCpurate() {
+     File file = new File("/proc/stat");
+     BufferedReader br;
+     Float result = null;
+     try {
+    		  br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+    		  StringTokenizer token = new StringTokenizer(br.readLine());
+		     token.nextToken();
+		     int user1 = Integer.parseInt(token.nextToken());
+		     int nice1 = Integer.parseInt(token.nextToken());
+		     int sys1 = Integer.parseInt(token.nextToken());
+		     int idle1 = Integer.parseInt(token.nextToken());
+		     Thread.sleep(1000);
+		     br = new BufferedReader(
+		     new InputStreamReader(new FileInputStream(file)));
+		     token = new StringTokenizer(br.readLine());
+		     token.nextToken();
+		     int user2 = Integer.parseInt(token.nextToken());
+		     int nice2 = Integer.parseInt(token.nextToken());
+		     int sys2 = Integer.parseInt(token.nextToken());
+		     int idle2 = Integer.parseInt(token.nextToken());
+		     result = (float)((user2 + sys2 + nice2) - (user1 + sys1 + nice1)) / (float)((user2 + nice2 + sys2 + idle2) - (user1 + nice1 + sys1 + idle1));
+     } catch (Exception e) {
+    		  e.printStackTrace();
+             }
+     result = result * 100;
+     return String.format("%.2f", result);
+     }
+  
 
   private void initConstants(Instance instance){
     Constants.inside_use_proxy_map.put(instance.getId(), instance.isInUseProxy());
@@ -168,6 +226,9 @@ public class ThriftHandler implements SwiftController.Iface
     instance.setIndex(resource.getIndex());
     instance.setSync(resource.isSync());
     instance.setSyncDomain(resource.getSyncDomain());
+    instance.setAddress(resource.getAddress());
+    instance.setTotalNodes(resource.getTotalNodes());
+    instance.setSeqId(resource.getSeqId());
     return instance;
   }
   
@@ -208,5 +269,7 @@ public class ThriftHandler implements SwiftController.Iface
     }
     return array;
   }
+
+
 
 }

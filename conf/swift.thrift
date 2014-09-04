@@ -1,4 +1,4 @@
-namespace java com.ncfgroup.swift.net.thrift
+namespace java com.ganqiang.swift.net.thrift
 
 struct Job {
   1: required string id,
@@ -32,7 +32,10 @@ struct GlobalConfig {
   11: optional string dbUrl,
   12: optional string dbUsername,
   13: optional string dbPassword,
-  14: optional i32 dbPoolSize = 10
+  14: optional i32 dbPoolSize = 10,
+  15: optional i32 seqId,
+  16: optional string address,
+  17: optional i32 totalNodes
 }
 
 enum JobCommand {
@@ -57,10 +60,18 @@ struct GlobalResponse {
   2: required string message
 }
 
+struct PingResponse {
+  1: required string cpurate,
+  2: required string memrate,
+  3: required string os
+}
+
+
 service SwiftController {
   JobResponse allot(1: Job job)
   JobResponse sendJobCommand(1: string jobid, 2: JobCommand jobcommand)
   GlobalConfig view()
   GlobalResponse update(1: GlobalConfig globalconfig)
   void sendGlobalCommand(1: GlobalCommand globalcommand)
+  PingResponse ping()
 }

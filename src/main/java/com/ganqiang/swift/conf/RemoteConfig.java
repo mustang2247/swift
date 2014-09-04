@@ -18,8 +18,29 @@ public class RemoteConfig
   private String dbPassword;
   private Integer dbPoolSize;
   private String thriftServer;
+  private Integer seqId;
+  private Integer totalNodes;
+  private String address;
 
-  public String getThriftServer()
+  public Integer getSeqId() {
+	return seqId;
+}
+public void setSeqId(Integer seqId) {
+	this.seqId = seqId;
+}
+public Integer getTotalNodes() {
+	return totalNodes;
+}
+public void setTotalNodes(Integer totalNodes) {
+	this.totalNodes = totalNodes;
+}
+public String getAddress() {
+	return address;
+}
+public void setAddress(String address) {
+	this.address = address;
+}
+public String getThriftServer()
   {
     return thriftServer;
   }

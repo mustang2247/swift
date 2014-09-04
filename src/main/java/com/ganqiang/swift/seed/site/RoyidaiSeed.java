@@ -18,7 +18,7 @@ public final class RoyidaiSeed extends AbstractSeed implements InsideSeed
   @Override
   public int loadPageSize()
   {
-    String html = HttpHelper.getContentFromUrl("http://www.royidai.com/finance.do");
+    String html = HttpHelper.getContentFromUrl("http://www.royidai.com/financelist.do");
     Document doc = Jsoup.parse(html);  
     Elements elements = doc.select(".pageDivClass");
     String pageinfo = elements.text().split("共")[1].split("页")[0];
@@ -36,7 +36,7 @@ public final class RoyidaiSeed extends AbstractSeed implements InsideSeed
   @Override
   public String getPreListLink()
   {
-    return "http://www.royidai.com/finance.do?curPage=";
+    return "http://www.royidai.com/financelist.do?curPage=";
   }
 
   @Override
@@ -48,7 +48,7 @@ public final class RoyidaiSeed extends AbstractSeed implements InsideSeed
   @Override
   public String getLogo()
   {
-    return "http://www.royidai.com/images/index9_03.jpg";
+    return "http://www.royidai.com/images/logo.jpg";
   }
 
   @Override

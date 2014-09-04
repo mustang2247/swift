@@ -32,28 +32,28 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JobResponse implements org.apache.thrift.TBase<JobResponse, JobResponse._Fields>, java.io.Serializable, Cloneable, Comparable<JobResponse> {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("JobResponse");
+public class PingResponse implements org.apache.thrift.TBase<PingResponse, PingResponse._Fields>, java.io.Serializable, Cloneable, Comparable<PingResponse> {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("PingResponse");
 
-  private static final org.apache.thrift.protocol.TField JOBID_FIELD_DESC = new org.apache.thrift.protocol.TField("jobid", org.apache.thrift.protocol.TType.STRING, (short)1);
-  private static final org.apache.thrift.protocol.TField STATUS_FIELD_DESC = new org.apache.thrift.protocol.TField("status", org.apache.thrift.protocol.TType.STRING, (short)2);
-  private static final org.apache.thrift.protocol.TField MESSAGE_FIELD_DESC = new org.apache.thrift.protocol.TField("message", org.apache.thrift.protocol.TType.STRING, (short)3);
+  private static final org.apache.thrift.protocol.TField CPURATE_FIELD_DESC = new org.apache.thrift.protocol.TField("cpurate", org.apache.thrift.protocol.TType.STRING, (short)1);
+  private static final org.apache.thrift.protocol.TField MEMRATE_FIELD_DESC = new org.apache.thrift.protocol.TField("memrate", org.apache.thrift.protocol.TType.STRING, (short)2);
+  private static final org.apache.thrift.protocol.TField OS_FIELD_DESC = new org.apache.thrift.protocol.TField("os", org.apache.thrift.protocol.TType.STRING, (short)3);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
-    schemes.put(StandardScheme.class, new JobResponseStandardSchemeFactory());
-    schemes.put(TupleScheme.class, new JobResponseTupleSchemeFactory());
+    schemes.put(StandardScheme.class, new PingResponseStandardSchemeFactory());
+    schemes.put(TupleScheme.class, new PingResponseTupleSchemeFactory());
   }
 
-  public String jobid; // required
-  public String status; // required
-  public String message; // required
+  public String cpurate; // required
+  public String memrate; // required
+  public String os; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    JOBID((short)1, "jobid"),
-    STATUS((short)2, "status"),
-    MESSAGE((short)3, "message");
+    CPURATE((short)1, "cpurate"),
+    MEMRATE((short)2, "memrate"),
+    OS((short)3, "os");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -68,12 +68,12 @@ public class JobResponse implements org.apache.thrift.TBase<JobResponse, JobResp
      */
     public static _Fields findByThriftId(int fieldId) {
       switch(fieldId) {
-        case 1: // JOBID
-          return JOBID;
-        case 2: // STATUS
-          return STATUS;
-        case 3: // MESSAGE
-          return MESSAGE;
+        case 1: // CPURATE
+          return CPURATE;
+        case 2: // MEMRATE
+          return MEMRATE;
+        case 3: // OS
+          return OS;
         default:
           return null;
       }
@@ -117,151 +117,151 @@ public class JobResponse implements org.apache.thrift.TBase<JobResponse, JobResp
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.JOBID, new org.apache.thrift.meta_data.FieldMetaData("jobid", org.apache.thrift.TFieldRequirementType.REQUIRED, 
+    tmpMap.put(_Fields.CPURATE, new org.apache.thrift.meta_data.FieldMetaData("cpurate", org.apache.thrift.TFieldRequirementType.REQUIRED, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.STATUS, new org.apache.thrift.meta_data.FieldMetaData("status", org.apache.thrift.TFieldRequirementType.REQUIRED, 
+    tmpMap.put(_Fields.MEMRATE, new org.apache.thrift.meta_data.FieldMetaData("memrate", org.apache.thrift.TFieldRequirementType.REQUIRED, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.MESSAGE, new org.apache.thrift.meta_data.FieldMetaData("message", org.apache.thrift.TFieldRequirementType.REQUIRED, 
+    tmpMap.put(_Fields.OS, new org.apache.thrift.meta_data.FieldMetaData("os", org.apache.thrift.TFieldRequirementType.REQUIRED, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(JobResponse.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(PingResponse.class, metaDataMap);
   }
 
-  public JobResponse() {
+  public PingResponse() {
   }
 
-  public JobResponse(
-    String jobid,
-    String status,
-    String message)
+  public PingResponse(
+    String cpurate,
+    String memrate,
+    String os)
   {
     this();
-    this.jobid = jobid;
-    this.status = status;
-    this.message = message;
+    this.cpurate = cpurate;
+    this.memrate = memrate;
+    this.os = os;
   }
 
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public JobResponse(JobResponse other) {
-    if (other.isSetJobid()) {
-      this.jobid = other.jobid;
+  public PingResponse(PingResponse other) {
+    if (other.isSetCpurate()) {
+      this.cpurate = other.cpurate;
     }
-    if (other.isSetStatus()) {
-      this.status = other.status;
+    if (other.isSetMemrate()) {
+      this.memrate = other.memrate;
     }
-    if (other.isSetMessage()) {
-      this.message = other.message;
+    if (other.isSetOs()) {
+      this.os = other.os;
     }
   }
 
-  public JobResponse deepCopy() {
-    return new JobResponse(this);
+  public PingResponse deepCopy() {
+    return new PingResponse(this);
   }
 
   @Override
   public void clear() {
-    this.jobid = null;
-    this.status = null;
-    this.message = null;
+    this.cpurate = null;
+    this.memrate = null;
+    this.os = null;
   }
 
-  public String getJobid() {
-    return this.jobid;
+  public String getCpurate() {
+    return this.cpurate;
   }
 
-  public JobResponse setJobid(String jobid) {
-    this.jobid = jobid;
+  public PingResponse setCpurate(String cpurate) {
+    this.cpurate = cpurate;
     return this;
   }
 
-  public void unsetJobid() {
-    this.jobid = null;
+  public void unsetCpurate() {
+    this.cpurate = null;
   }
 
-  /** Returns true if field jobid is set (has been assigned a value) and false otherwise */
-  public boolean isSetJobid() {
-    return this.jobid != null;
+  /** Returns true if field cpurate is set (has been assigned a value) and false otherwise */
+  public boolean isSetCpurate() {
+    return this.cpurate != null;
   }
 
-  public void setJobidIsSet(boolean value) {
+  public void setCpurateIsSet(boolean value) {
     if (!value) {
-      this.jobid = null;
+      this.cpurate = null;
     }
   }
 
-  public String getStatus() {
-    return this.status;
+  public String getMemrate() {
+    return this.memrate;
   }
 
-  public JobResponse setStatus(String status) {
-    this.status = status;
+  public PingResponse setMemrate(String memrate) {
+    this.memrate = memrate;
     return this;
   }
 
-  public void unsetStatus() {
-    this.status = null;
+  public void unsetMemrate() {
+    this.memrate = null;
   }
 
-  /** Returns true if field status is set (has been assigned a value) and false otherwise */
-  public boolean isSetStatus() {
-    return this.status != null;
+  /** Returns true if field memrate is set (has been assigned a value) and false otherwise */
+  public boolean isSetMemrate() {
+    return this.memrate != null;
   }
 
-  public void setStatusIsSet(boolean value) {
+  public void setMemrateIsSet(boolean value) {
     if (!value) {
-      this.status = null;
+      this.memrate = null;
     }
   }
 
-  public String getMessage() {
-    return this.message;
+  public String getOs() {
+    return this.os;
   }
 
-  public JobResponse setMessage(String message) {
-    this.message = message;
+  public PingResponse setOs(String os) {
+    this.os = os;
     return this;
   }
 
-  public void unsetMessage() {
-    this.message = null;
+  public void unsetOs() {
+    this.os = null;
   }
 
-  /** Returns true if field message is set (has been assigned a value) and false otherwise */
-  public boolean isSetMessage() {
-    return this.message != null;
+  /** Returns true if field os is set (has been assigned a value) and false otherwise */
+  public boolean isSetOs() {
+    return this.os != null;
   }
 
-  public void setMessageIsSet(boolean value) {
+  public void setOsIsSet(boolean value) {
     if (!value) {
-      this.message = null;
+      this.os = null;
     }
   }
 
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
-    case JOBID:
+    case CPURATE:
       if (value == null) {
-        unsetJobid();
+        unsetCpurate();
       } else {
-        setJobid((String)value);
+        setCpurate((String)value);
       }
       break;
 
-    case STATUS:
+    case MEMRATE:
       if (value == null) {
-        unsetStatus();
+        unsetMemrate();
       } else {
-        setStatus((String)value);
+        setMemrate((String)value);
       }
       break;
 
-    case MESSAGE:
+    case OS:
       if (value == null) {
-        unsetMessage();
+        unsetOs();
       } else {
-        setMessage((String)value);
+        setOs((String)value);
       }
       break;
 
@@ -270,14 +270,14 @@ public class JobResponse implements org.apache.thrift.TBase<JobResponse, JobResp
 
   public Object getFieldValue(_Fields field) {
     switch (field) {
-    case JOBID:
-      return getJobid();
+    case CPURATE:
+      return getCpurate();
 
-    case STATUS:
-      return getStatus();
+    case MEMRATE:
+      return getMemrate();
 
-    case MESSAGE:
-      return getMessage();
+    case OS:
+      return getOs();
 
     }
     throw new IllegalStateException();
@@ -290,12 +290,12 @@ public class JobResponse implements org.apache.thrift.TBase<JobResponse, JobResp
     }
 
     switch (field) {
-    case JOBID:
-      return isSetJobid();
-    case STATUS:
-      return isSetStatus();
-    case MESSAGE:
-      return isSetMessage();
+    case CPURATE:
+      return isSetCpurate();
+    case MEMRATE:
+      return isSetMemrate();
+    case OS:
+      return isSetOs();
     }
     throw new IllegalStateException();
   }
@@ -304,39 +304,39 @@ public class JobResponse implements org.apache.thrift.TBase<JobResponse, JobResp
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof JobResponse)
-      return this.equals((JobResponse)that);
+    if (that instanceof PingResponse)
+      return this.equals((PingResponse)that);
     return false;
   }
 
-  public boolean equals(JobResponse that) {
+  public boolean equals(PingResponse that) {
     if (that == null)
       return false;
 
-    boolean this_present_jobid = true && this.isSetJobid();
-    boolean that_present_jobid = true && that.isSetJobid();
-    if (this_present_jobid || that_present_jobid) {
-      if (!(this_present_jobid && that_present_jobid))
+    boolean this_present_cpurate = true && this.isSetCpurate();
+    boolean that_present_cpurate = true && that.isSetCpurate();
+    if (this_present_cpurate || that_present_cpurate) {
+      if (!(this_present_cpurate && that_present_cpurate))
         return false;
-      if (!this.jobid.equals(that.jobid))
-        return false;
-    }
-
-    boolean this_present_status = true && this.isSetStatus();
-    boolean that_present_status = true && that.isSetStatus();
-    if (this_present_status || that_present_status) {
-      if (!(this_present_status && that_present_status))
-        return false;
-      if (!this.status.equals(that.status))
+      if (!this.cpurate.equals(that.cpurate))
         return false;
     }
 
-    boolean this_present_message = true && this.isSetMessage();
-    boolean that_present_message = true && that.isSetMessage();
-    if (this_present_message || that_present_message) {
-      if (!(this_present_message && that_present_message))
+    boolean this_present_memrate = true && this.isSetMemrate();
+    boolean that_present_memrate = true && that.isSetMemrate();
+    if (this_present_memrate || that_present_memrate) {
+      if (!(this_present_memrate && that_present_memrate))
         return false;
-      if (!this.message.equals(that.message))
+      if (!this.memrate.equals(that.memrate))
+        return false;
+    }
+
+    boolean this_present_os = true && this.isSetOs();
+    boolean that_present_os = true && that.isSetOs();
+    if (this_present_os || that_present_os) {
+      if (!(this_present_os && that_present_os))
+        return false;
+      if (!this.os.equals(that.os))
         return false;
     }
 
@@ -349,39 +349,39 @@ public class JobResponse implements org.apache.thrift.TBase<JobResponse, JobResp
   }
 
   @Override
-  public int compareTo(JobResponse other) {
+  public int compareTo(PingResponse other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
 
     int lastComparison = 0;
 
-    lastComparison = Boolean.valueOf(isSetJobid()).compareTo(other.isSetJobid());
+    lastComparison = Boolean.valueOf(isSetCpurate()).compareTo(other.isSetCpurate());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetJobid()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.jobid, other.jobid);
+    if (isSetCpurate()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.cpurate, other.cpurate);
       if (lastComparison != 0) {
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetStatus()).compareTo(other.isSetStatus());
+    lastComparison = Boolean.valueOf(isSetMemrate()).compareTo(other.isSetMemrate());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetStatus()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.status, other.status);
+    if (isSetMemrate()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.memrate, other.memrate);
       if (lastComparison != 0) {
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetMessage()).compareTo(other.isSetMessage());
+    lastComparison = Boolean.valueOf(isSetOs()).compareTo(other.isSetOs());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetMessage()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.message, other.message);
+    if (isSetOs()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.os, other.os);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -403,30 +403,30 @@ public class JobResponse implements org.apache.thrift.TBase<JobResponse, JobResp
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("JobResponse(");
+    StringBuilder sb = new StringBuilder("PingResponse(");
     boolean first = true;
 
-    sb.append("jobid:");
-    if (this.jobid == null) {
+    sb.append("cpurate:");
+    if (this.cpurate == null) {
       sb.append("null");
     } else {
-      sb.append(this.jobid);
+      sb.append(this.cpurate);
     }
     first = false;
     if (!first) sb.append(", ");
-    sb.append("status:");
-    if (this.status == null) {
+    sb.append("memrate:");
+    if (this.memrate == null) {
       sb.append("null");
     } else {
-      sb.append(this.status);
+      sb.append(this.memrate);
     }
     first = false;
     if (!first) sb.append(", ");
-    sb.append("message:");
-    if (this.message == null) {
+    sb.append("os:");
+    if (this.os == null) {
       sb.append("null");
     } else {
-      sb.append(this.message);
+      sb.append(this.os);
     }
     first = false;
     sb.append(")");
@@ -435,14 +435,14 @@ public class JobResponse implements org.apache.thrift.TBase<JobResponse, JobResp
 
   public void validate() throws org.apache.thrift.TException {
     // check for required fields
-    if (jobid == null) {
-      throw new org.apache.thrift.protocol.TProtocolException("Required field 'jobid' was not present! Struct: " + toString());
+    if (cpurate == null) {
+      throw new org.apache.thrift.protocol.TProtocolException("Required field 'cpurate' was not present! Struct: " + toString());
     }
-    if (status == null) {
-      throw new org.apache.thrift.protocol.TProtocolException("Required field 'status' was not present! Struct: " + toString());
+    if (memrate == null) {
+      throw new org.apache.thrift.protocol.TProtocolException("Required field 'memrate' was not present! Struct: " + toString());
     }
-    if (message == null) {
-      throw new org.apache.thrift.protocol.TProtocolException("Required field 'message' was not present! Struct: " + toString());
+    if (os == null) {
+      throw new org.apache.thrift.protocol.TProtocolException("Required field 'os' was not present! Struct: " + toString());
     }
     // check for sub-struct validity
   }
@@ -463,15 +463,15 @@ public class JobResponse implements org.apache.thrift.TBase<JobResponse, JobResp
     }
   }
 
-  private static class JobResponseStandardSchemeFactory implements SchemeFactory {
-    public JobResponseStandardScheme getScheme() {
-      return new JobResponseStandardScheme();
+  private static class PingResponseStandardSchemeFactory implements SchemeFactory {
+    public PingResponseStandardScheme getScheme() {
+      return new PingResponseStandardScheme();
     }
   }
 
-  private static class JobResponseStandardScheme extends StandardScheme<JobResponse> {
+  private static class PingResponseStandardScheme extends StandardScheme<PingResponse> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, JobResponse struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, PingResponse struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
@@ -481,26 +481,26 @@ public class JobResponse implements org.apache.thrift.TBase<JobResponse, JobResp
           break;
         }
         switch (schemeField.id) {
-          case 1: // JOBID
+          case 1: // CPURATE
             if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.jobid = iprot.readString();
-              struct.setJobidIsSet(true);
+              struct.cpurate = iprot.readString();
+              struct.setCpurateIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 2: // STATUS
+          case 2: // MEMRATE
             if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.status = iprot.readString();
-              struct.setStatusIsSet(true);
+              struct.memrate = iprot.readString();
+              struct.setMemrateIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 3: // MESSAGE
+          case 3: // OS
             if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.message = iprot.readString();
-              struct.setMessageIsSet(true);
+              struct.os = iprot.readString();
+              struct.setOsIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -516,23 +516,23 @@ public class JobResponse implements org.apache.thrift.TBase<JobResponse, JobResp
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, JobResponse struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, PingResponse struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
-      if (struct.jobid != null) {
-        oprot.writeFieldBegin(JOBID_FIELD_DESC);
-        oprot.writeString(struct.jobid);
+      if (struct.cpurate != null) {
+        oprot.writeFieldBegin(CPURATE_FIELD_DESC);
+        oprot.writeString(struct.cpurate);
         oprot.writeFieldEnd();
       }
-      if (struct.status != null) {
-        oprot.writeFieldBegin(STATUS_FIELD_DESC);
-        oprot.writeString(struct.status);
+      if (struct.memrate != null) {
+        oprot.writeFieldBegin(MEMRATE_FIELD_DESC);
+        oprot.writeString(struct.memrate);
         oprot.writeFieldEnd();
       }
-      if (struct.message != null) {
-        oprot.writeFieldBegin(MESSAGE_FIELD_DESC);
-        oprot.writeString(struct.message);
+      if (struct.os != null) {
+        oprot.writeFieldBegin(OS_FIELD_DESC);
+        oprot.writeString(struct.os);
         oprot.writeFieldEnd();
       }
       oprot.writeFieldStop();
@@ -541,31 +541,31 @@ public class JobResponse implements org.apache.thrift.TBase<JobResponse, JobResp
 
   }
 
-  private static class JobResponseTupleSchemeFactory implements SchemeFactory {
-    public JobResponseTupleScheme getScheme() {
-      return new JobResponseTupleScheme();
+  private static class PingResponseTupleSchemeFactory implements SchemeFactory {
+    public PingResponseTupleScheme getScheme() {
+      return new PingResponseTupleScheme();
     }
   }
 
-  private static class JobResponseTupleScheme extends TupleScheme<JobResponse> {
+  private static class PingResponseTupleScheme extends TupleScheme<PingResponse> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, JobResponse struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, PingResponse struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
-      oprot.writeString(struct.jobid);
-      oprot.writeString(struct.status);
-      oprot.writeString(struct.message);
+      oprot.writeString(struct.cpurate);
+      oprot.writeString(struct.memrate);
+      oprot.writeString(struct.os);
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, JobResponse struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, PingResponse struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      struct.jobid = iprot.readString();
-      struct.setJobidIsSet(true);
-      struct.status = iprot.readString();
-      struct.setStatusIsSet(true);
-      struct.message = iprot.readString();
-      struct.setMessageIsSet(true);
+      struct.cpurate = iprot.readString();
+      struct.setCpurateIsSet(true);
+      struct.memrate = iprot.readString();
+      struct.setMemrateIsSet(true);
+      struct.os = iprot.readString();
+      struct.setOsIsSet(true);
     }
   }
 

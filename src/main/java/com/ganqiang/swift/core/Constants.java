@@ -120,4 +120,15 @@ public final class Constants
   public static final String listpage_filename = "list-page-";
   public static final String detailpage_filename = "detail-page-";
 
+  //key： instanceid value: seq_id
+  public static HashMap<String, Integer> local_seq_id_map = new HashMap<String, Integer>();
+  //key： instanceid value: address
+  public static HashMap<String, String> local_address_map = new HashMap<String, String>();
+  //key： instanceid value: total_nodes
+  public static HashMap<String, Integer> local_total_nodes_map = new HashMap<String, Integer>();
+  
+  public static Integer remote_seq_id = null;
+  public static String remote_address = null;
+  public static Integer remote_total_nodes = null;
+ 
 }

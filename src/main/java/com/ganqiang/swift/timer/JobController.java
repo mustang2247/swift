@@ -45,7 +45,7 @@ public class JobController extends TimerTask implements JobExecutor
         }
         int pageSize = Constants.seed_map.get(type).getPageSize();
         String listurl = Constants.seed_map.get(type).getPreListLink();
-        if(type.equals(SiteType.YIRENDAI) || type.equals(SiteType.FIRSTP2P)){
+        if(type.equals(SiteType.FIRSTP2P)){
           String[] seed = listurl.split("\\" + Constants.split_str);
           for (int i = 0; i < pageSize; i++) {
             UrlQueue.addUnVisitedUrl(key, seed[0] + i + seed[1]);

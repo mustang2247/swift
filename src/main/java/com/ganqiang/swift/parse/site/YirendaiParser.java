@@ -34,16 +34,14 @@ public final class YirendaiParser implements Parsable
     List<FetchedPage> fplist = (List<FetchedPage>) event.get(Event.fetchedPages_key);
     List<Result> results = new ArrayList<Result>();
     String path = Constants.inside_avatar_path_map.get(key);
-    String homepage = Constants.seed_map.get(type).getHomePage();
     String logo = Constants.seed_map.get(type).getLogo();
     try {
       for (FetchedPage fetchedPage : fplist) {
         String url = fetchedPage.getUrl();
         logger.info("Worker [" + Thread.currentThread().getName() + "] --- [YirendaiParser] begin parse from [" + url + "].");
-        String id = url.split("=")[1];
         if (fetchedPage.getContent().contains("很抱歉，此页面正在维护中") || fetchedPage.getContent().contains("系统升级中")) {
           continue;
-        }
+        			}
         Document doc = Jsoup.parse(fetchedPage.getContent());
 
         Result result = new Result(type);
@@ -55,108 +53,54 @@ public final class YirendaiParser implements Parsable
         result.setSecurityMode("本息担保");
         
         
-        Element avatarele = doc.select(".img_temp2").select(".bc").select(".png").select("img").first();
-        String imgsrc = homepage + StringUtil.getAbsolutePath(avatarele.attr("src"));
-        if (imgsrc.contains("touxiang.jpg")) {
-          id = "touxiang";
-        }
-        String filename = FileUtil.downloadAvatar(instanceid, type, path, id, logo, imgsrc);
+        String filename = FileUtil.downloadAvatar(instanceid,SiteType.YIRENDAI, path, "", logo);
         result.setAvatar(instanceid, filename);
             
-        Elements names = doc.select(".fb").select(".f14").select(".mt30").select(".mb30").select(".ml20");
+        Elements names = doc.select("strong[class=l]");
         result.setName(names.text());   
         
-        Elements detail = doc.select(".pl100").select(".lh200").select(".mw710");
-        result.setDetailDesc(detail.text());
+        Elements detail = doc.select("div[class*=elite_left]");
+        for(Element e : detail){
+        		if(e.text().contains("借款描述")){
+        			result.setDetailDesc(e.select("p").get(1).text().trim());
+        					}
+        			}
         
-        Elements up = doc.select(".borrowApplyDetail").select(".borrowBox").select(".br5")
-            .select(".bc").select(".pt30").select(".pl15").select(".pr15").select(".pb30").first().children();
-        for (Element ele : up) {
-          if (ele.tag().getName().equals("span")) {
-            if (ele.className().equals("picIconJyb")) {
-              result.setCategory("精英标");
-            }
-          } else {
-            String text = up.text().toString().split("借款人信息")[0];
-            
-            String content = text.replaceAll("\\：", "").replaceAll("\\:", "")
-                .replaceAll("借款人", "")
-                .replaceAll("借款金额", "").replaceAll("年利率", "").replaceAll("元", "")
-                .replaceAll("提示", "").replaceAll("此不等同于收益率", "")
-                .replaceAll("（由于采用等额本息法每月还款），若想达到等同于此利率的收益，建议您循环出借。", "")
-                .replaceAll("借款期限", "").replaceAll("%", "").replaceAll("借款说明", "")
-                .replaceAll("本借款采用", "").replaceAll("还款方式", "")
-                .replaceAll("剩余时间", "").replaceAll("投标进度", "")
-                .replaceAll("投标完成", "").replaceAll("共", "").replaceAll("笔投资", "")
-                .replaceAll("可投金额", "").replaceAll("投标金额", "")
-                .replaceAll("加入购物车", "");
-            
-            StringTokenizer st = new StringTokenizer(content);
-            //说明已满标
-            if(content.contains("看看其他标")){
-              int i = 0;
-              while (st.hasMoreElements()) {
-                Object obj = st.nextElement();
-                String str = obj.toString().trim();
-                if (i == 0) {
-                  result.setBorrower(str);
-                } else if (i == 1) {
-                  result.setMoney(Double.valueOf(str));
-                } else if (i == 2) {
-                  result.setYearRate(Double.valueOf(str));
-                } else if (i == 3) {
-                  result.setRepayLimitTime(str);
-                } else if (i == 4) {
-                  result.setRepayMode(str);
-                } else if (i == 5) {
-                  Double progress = Double.valueOf(str);
-                  result.setProgress(progress);
-                } else if (i == 6) {
-                  result.setTotalNum(Integer.valueOf(str));
-                } else if (i == 7) {
-                  result.setRemainMoney(Double.valueOf(str));
-                } else if (i == 8){
-                  if (str.equals("看看其他标")) {
-                    result.setStatus(Constants.status_ymb);
-                  }
-                }
-                i++;
-              }
-            } else { // 投标中
-              int i = 0;
-              while (st.hasMoreElements()) {
-                Object obj = st.nextElement();
-                String str = obj.toString().trim();
-                if (i == 0) {
-                  result.setBorrower(str);
-                } else if (i == 1) {
-                  result.setMoney(Double.valueOf(str));
-                } else if (i == 2) {
-                  result.setYearRate(Double.valueOf(str));
-                } else if (i == 3) {
-                  result.setRepayLimitTime(str);
-                } else if (i == 4) {
-                  result.setRepayMode(str);
-                } else if (i == 5) {
-                  result.setRemainTime(str);
-                } else if (i == 6) {
-                  result.setProgress(Double.valueOf(str));
-                } else if (i == 7) {
-                  result.setTotalNum(Integer.valueOf(str));
-                } else if (i == 8) {
-                  result.setRemainMoney(Double.valueOf(str));
-                } else if (i == 9){
-                  if (str.equals("立即投标")) {
-                    result.setStatus(Constants.status_tbz);
-                  }
-                }
-                i++;
-              }
-            }
-            
-          }
-        }
+        
+        Elements up = doc.select("table[class=elite_table] tbody tr");
+        String moneystr = up.get(1).select("td").get(0).text().replaceAll(",", "");
+        result.setMoney(Double.valueOf(moneystr.trim()));
+        String yearrate = up.get(1).select("td").get(1).text().replaceAll("%", "");
+        result.setYearRate(Double.valueOf(yearrate.trim()));
+        String repayLimitTime = up.get(1).select("td").get(2).text().trim();
+        result.setRepayLimitTime(repayLimitTime+"个月");
+        
+        
+        String progressstr = up.get(2).select("td").get(0).select("strong").text().replaceAll("投标完成", "").replaceAll("%", "");
+        result.setProgress(Double.valueOf(progressstr.trim()));
+        String remaintimestr = up.get(2).select("td").get(1).select("span").text().trim();
+        result.setRemainTime(remaintimestr);
+        
+        String bstr = up.get(3).select("td").get(0).select("span").text().trim();
+        result.setBorrower(bstr);
+        
+        String repaymodestr = up.get(3).select("td").get(1).text().replaceAll("还款方式：", "").trim();
+        result.setRepayMode(repaymodestr);
+        
+        String secstr = up.get(3).select("td").get(2).text().replaceAll("保障计划：", "").trim();
+        result.setSecurityMode(secstr);
 
+        Elements totalnum = doc.select("table[class=table_gray] tbody tr");
+					result.setTotalNum(totalnum.size());
+
+					String remainMoney = doc.select("p[class=surplus_money]").text().replaceAll(",", "");
+					result.setRemainMoney(Double.valueOf(remainMoney.trim()));
+					
+					String state = doc.select("p[class=distance_value] a").get(0).text();
+					if(state.contains("立即投标")){
+						result.setStatus(Constants.status_tbz);
+					}
+					
         results.add(result);
         logger.info("Worker [" + Thread.currentThread().getName() + "] --- [YirendaiParser] end parse from [" + url + "].");
       }

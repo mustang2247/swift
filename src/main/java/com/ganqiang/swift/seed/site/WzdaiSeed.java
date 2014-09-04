@@ -20,7 +20,7 @@ public final class WzdaiSeed extends AbstractSeed implements InsideSeed
   {
     String html = HttpHelper.getContentFromUrl("http://www.wzdai.com/invest/index.html");
     Document doc = Jsoup.parse(html);   
-    Element element = doc.select(".investlist").select(".mt10").get(1);
+    Element element = doc.select("div[align=center] span[style*=float]").get(0);
     String pageinfo = element.text().split("条")[1].split("页")[0];
     int totalpage = Integer.valueOf(pageinfo);
     logger.info("Loading [wzdai] list page number is ["+ totalpage +"]");

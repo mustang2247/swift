@@ -5,13 +5,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-import com.ganqiang.swift.core.Constants;
 import com.ganqiang.swift.fetch.site.CommonLinkFetcher;
 import com.ganqiang.swift.net.http.HttpHelper;
 import com.ganqiang.swift.parse.site.YirendaiParser;
 import com.ganqiang.swift.seed.AbstractSeed;
 import com.ganqiang.swift.seed.InsideSeed;
-import com.ganqiang.swift.util.StringUtil;
 
 public final class YirendaiSeed extends AbstractSeed implements InsideSeed
 {
@@ -24,14 +22,10 @@ public final class YirendaiSeed extends AbstractSeed implements InsideSeed
   @Override
   public int loadPageSize()
   {
-    String html = HttpHelper.getContentFromUrl("http://www.yirendai.com/LenderApplyListAction/applyInfoListPage.action");
+    String html = HttpHelper.getContentFromUrl("http://www.yirendai.com/loan/list/1");
     Document doc = Jsoup.parse(html);
-    Elements elements = doc.select(".next").select(".png");
-    String link = elements.attr("href").split("offset=")[1].split("0&isJYD")[0];
-    if(StringUtil.isNullOrBlank(link)){
-      link = "0";
-    }
-    int totalpage = Integer.valueOf(link) + 1;
+    Elements elements = doc.select("a[class=m-pageNum]");
+    int totalpage = Integer.valueOf(elements.get(elements.size() - 1).text());
     logger.info("Loading [yirendai] list total page number is ["+ totalpage +"]");
     return Integer.valueOf(totalpage);
   }
@@ -45,19 +39,19 @@ public final class YirendaiSeed extends AbstractSeed implements InsideSeed
   @Override
   public String getPreListLink()
   {
-    return "http://www.yirendai.com/LenderApplyListAction/applyInfoListPage.action?pager.offset=" + Constants.split_str + "0";
+    return "http://www.yirendai.com/loan/list/";
   }
 
   @Override
   public String getPreDetailLink()
   {
-    return "http://www.yirendai.com/BorrowDetailInfoAction/changefoseedordPage.action?applyId=";
+    return "http://www.yirendai.com/loan/view/";
   }
 
   @Override
   public String getLogo()
   {
-    return "http://www.yirendai.com/images/logo.png";
+    return "http://www.yirendai.com/ccms/images/header_2013/header_2013_logo.png";
   }
 
   @Override
@@ -81,7 +75,7 @@ public final class YirendaiSeed extends AbstractSeed implements InsideSeed
   @Override
   public String getDetailLinkMark()
   {
-    return "BorrowDetailInfoAction/changeforwordPage.action?applyId=";
+    return "/loan/view/";
   }
 
 

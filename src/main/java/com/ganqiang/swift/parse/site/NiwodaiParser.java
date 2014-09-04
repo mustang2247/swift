@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import com.ganqiang.swift.core.Constants;
 import com.ganqiang.swift.core.Event;
@@ -46,32 +47,33 @@ public class NiwodaiParser implements Parsable
         String title = doc.select("a[class=fs16]").first().text();
         result.setName(title);
         
-        String money = doc.select("li[class=no_1]").select("span[class*=bigfont]").text().replaceAll(",", "").replaceAll("元", "");
+        Elements tes =  doc.select("div[class*=pad] span[class*=fs_32]");
+        String money = tes.get(0).text().replaceAll(",", "").replaceAll("元", "");
         result.setMoney(Double.valueOf(money));
         
-        String yearrate = doc.select("li[class=no_2]").select("span[class*=bigfont]").text().replaceAll("%", "");
+        String yearrate = tes.get(1).text().replaceAll("%", "");
         result.setYearRate(Double.valueOf(yearrate));
         
-        String repayLimitTime = doc.select("li[class=no_3]").select("span[class*=bigfont]").text();
-        result.setRepayLimitTime(repayLimitTime);
+        String repayLimitTime = tes.get(2).text();
+        result.setRepayLimitTime(repayLimitTime+doc.select("div[class*=pad] span[class*=fs_18]").get(2).text());
         
-        Element bdoc = doc.select(".clearfix").select(".explain_2").select(".pb_18").select(".border_b").first();
+        Elements bdoc = doc.select("ul[class*=line2] li span");
 //        Elements ele1 = bdoc.child(0).children();
 //        for(Element ele : ele1){
 //          
 //        }
-        String ele2 = bdoc.child(1).child(1).text();
+        String ele2 = bdoc.get(0).text();
         result.setRepayMode(ele2);
         
-        Element es = doc.select(".clearfix").select(".explain_2").select(".pt_18").first();
-        String progress = es.child(0).text().replaceAll("投标进度：", "").replaceAll("%", "");
+        Element es = doc.select("ul[class*=line2]").get(1);
+        String progress = es.select("span[class*=progressBar] span[class*=barIn]").first().attr("style").replaceAll("width:", "").replaceAll("%", "");
         result.setProgress(Double.valueOf(progress));
         
-        String total = es.child(1).text().split("\\：")[1].split("人")[0];
+        String total = es.child(2).text().split("\\：")[1].split("人")[0];
         result.setTotalNum(Integer.valueOf(total.trim()));
         
         if (result.getProgress() != 100) {
-          String et = es.child(2).select("span[id=time]").text();
+          String et = es.child(3).select("span[id=time]").text();
           Date endtime = DateUtil.strToDate(et, "yyyy/MM/dd HH:mm:ss");
           result.setEndTime(DateUtil.dateToStr(endtime));
           result.setRemainTime(DateUtil.getRemainTime(endtime));
@@ -80,8 +82,8 @@ public class NiwodaiParser implements Parsable
         String amount = doc.select("span[id=needAmount]").text();
         result.setRemainMoney(Double.valueOf(amount));
         
-        String status = doc.select("button[type=button]").text();
-        if (status.contains("马上投标")) {
+        String status = doc.select("li[class=line5] a").text();
+        if (status.contains("马上投资")) {
           result.setStatus(Constants.status_tbz);
         }else if (status.contains("已经满标")) {
           result.setStatus(Constants.status_ymb);

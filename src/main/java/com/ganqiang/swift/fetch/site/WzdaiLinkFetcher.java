@@ -42,7 +42,7 @@ public final class WzdaiLinkFetcher implements Fetchable
     FetchedPage fp = HttpHelper.getFetchedPage(key, instanceid, type, url, useproxy);
     Document doc = Jsoup.parse(fp.getContent());
 
-    Elements tables = doc.select(".listmain").first().children();
+    Elements tables = doc.select("div[class=invest_box]");
 
     for (int i = 0; i < tables.size(); i++) {
       Element ele = tables.get(i);

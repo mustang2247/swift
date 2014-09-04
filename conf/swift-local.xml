@@ -7,19 +7,24 @@
 
      <!-- 
      <timer>
-       <interval>60</interval>
-       <start_time>2014-07-04 14:15:00</start_time>
+       <interval>60 * 2</interval>
+       <start_time>2014-09-03 15:33:00</start_time>
      </timer>
--->
 
+    <zookeeper>
+    			<seq_id>1</seq_id>
+    			<address>localhost:2181</address>
+    			<total_nodes>1</total_nodes>   
+    </zookeeper>
+    -->        
      <http_proxy>
-     	218.207.195.206:80
+     					60.191.39.252:80
      </http_proxy>
 
      <seeds>
 
        <inside is_download="false" js_support="false" use_proxy="true" delay="0">
-			all
+			     my089
        </inside>
 
     <!-- 
@@ -44,9 +49,9 @@
 	       <password>root</password>
 	       <pool_size>10</pool_size>
      	</db>
-     	<index>
+     	<!--  index>
      	  /opt/swift/data/index
-     	</index>
+     	</index-->
      </storage>
 
   </instance>

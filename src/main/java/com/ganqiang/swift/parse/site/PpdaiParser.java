@@ -75,15 +75,11 @@ public final class PpdaiParser implements Parsable
         result.setCategory("普通标");
       }
 
-      Elements right = doc.select("i[title=信用等级]");
       Elements down = doc.select("div[class=lend_detail_info] ul li");
       String borrower = doc.select("div[class=user_face_name] a").text();
       result.setDetailDesc(down.text().replaceAll("借款详情", ""));
       result.setBorrower(borrower);
-      if (!right.isEmpty() && right.first() != null) {
-        String creditRating = right.first().className();
-        result.setCreditRating(creditRating);
-      }
+
       String name = doc.select("td[class=list_tit]").text();
       result.setName(name);
       String money = doc.select("span[id=TotalAmount]").text().replaceAll(",", "").replaceAll("¥", "");
@@ -91,11 +87,15 @@ public final class PpdaiParser implements Parsable
         result.setMoney(Double.valueOf(money));
       }
       
-      String yearRate = doc.select("li[style=margin-top: 9px;] span").text().replaceAll("%", "");
+      Elements hes = doc.select("li[style*=margin-top] span");
+      String yearRate = hes.get(0).text().replaceAll("%", "");
       if (!StringUtil.isNullOrBlank(yearRate)) {
         result.setYearRate(Double.valueOf(yearRate));
       }
-      String repayLimitTime = doc.select("li[style=margin-top: 7px; padding-bottom: 0px;] span").text().replaceAll(" ", "");
+      String creditRating = hes.get(1).text().replaceAll("%", "");
+      result.setCreditRating(creditRating);
+      
+      String repayLimitTime = hes.get(2).text().replaceAll(" ", "");
       result.setRepayLimitTime(repayLimitTime);
       Elements els = doc.select("td[width=330]");
       if (!els.isEmpty() &&  els.first() != null) {

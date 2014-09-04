@@ -6,6 +6,7 @@ import com.ganqiang.swift.conf.SyncConfigHandler;
 import com.ganqiang.swift.net.http.HttpContextHandler;
 import com.ganqiang.swift.net.http.HttpProxyHandler;
 import com.ganqiang.swift.net.sync.SyncContextHandler;
+import com.ganqiang.swift.net.zk.ZKContextHandler;
 import com.ganqiang.swift.seed.PageSizeSettingHandler;
 import com.ganqiang.swift.seed.SeedContextHandler;
 import com.ganqiang.swift.storage.db.DBContextHandler;
@@ -42,6 +43,8 @@ public interface Visitor
   void visitLifeCycleSetting(LifeCycleSettingHandler handler);
   
   void visitInsideSeedPageSize(PageSizeSettingHandler handler);
+  
+  void visitZKContext(ZKContextHandler handler);
 
   void visitAll();
 }

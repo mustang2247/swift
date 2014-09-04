@@ -3,8 +3,14 @@
 
   <thread_num>2</thread_num>
 
-  <thrift port="8090" server="simple" protocal="binary"/>
-
+  <thrift port="8090" server="nonblocking" protocal="compact"/>
+  
+    <zookeeper>
+    			<seq_id>2</seq_id>
+    			<address>localhost:2181</address>
+    			<total_nodes>1</total_nodes>   
+    </zookeeper>
+    
    <storage>
        <!-- for avatar,page, $swift_path/data/ by default -->
        <disk is_sync="false" sync_domain="http://static.p2p800.com/">

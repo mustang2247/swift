@@ -43,7 +43,11 @@ public abstract class AbstractConfig implements Config
   protected static final String thrift_node = "thrift";  
   protected static final String port_node = "port";  
   protected static final String server_node = "server";
-  protected static final String protocal_node = "protocal";    
+  protected static final String protocal_node = "protocal";
+  protected static final String zookeeper_node = "zookeeper";  
+  protected static final String seq_id_node = "seq_id";
+  protected static final String address_node = "address";
+  protected static final String total_nodes_node = "total_nodes";
   /******** xml node value ************/
   public static final String simple_server_value = "simple";
   public static final String threadpool_server_value = "threadpool";

@@ -93,15 +93,21 @@ public final class Firstp2pLinkFetcher implements Fetchable
         result.setStatus(Constants.status_yhw);
       }
 
-      Double progress = CalculateUtil.mul(CalculateUtil.getDoubleHalfValue(obj.getDouble("point_percent")), 100);
-      result.setProgress(progress);
-      if (progress == 0) {
-        result.setRemainMoney(result.getMoney());
-      } else if(progress == 100){
-        result.setRemainMoney(Constants.zero_remain_money);
-      } else {
-        result.setRemainMoney(Double.valueOf(obj.getString("avaliable").replaceAll(",", "")));
-      }
+      Object percent = obj.get("point_percent");
+      if(percent != null && !percent.toString().equals("null")){System.out.println(percent);
+		    	  Double progress = CalculateUtil.mul(CalculateUtil.getDoubleHalfValue(obj.getDouble("point_percent")), 100);
+          result.setProgress(progress);
+          if (progress == 0) {
+            result.setRemainMoney(result.getMoney());
+          } else if(progress == 100){
+            result.setRemainMoney(Constants.zero_remain_money);
+          } else {
+            result.setRemainMoney(Double.valueOf(obj.getString("avaliable").replaceAll(",", "")));
+          					}
+     	}else{
+     		  Double avalible = Double.valueOf(obj.get("avaliable").toString().replaceAll(",", ""));
+      		 result.setProgress(CalculateUtil.mul(CalculateUtil.div(avalible, result.getMoney(), 2), 100));;
+      			}
 
       String startTime = obj.getString("start_time") + ":00";
       result.setStartTime(startTime);
@@ -111,10 +117,12 @@ public final class Firstp2pLinkFetcher implements Fetchable
       if (result.getProgress() > 0 && result.getProgress() < 100) {
         String remainTime = DateUtil.getRemainTime(DateUtil.parse(endTime));
         result.setRemainTime(remainTime);
-      }
+      			}
 
-      String desc = obj.getString("description");
-      result.setDetailDesc(desc);
+      Object desc = obj.get("description");
+      if(desc != null && !desc.toString().trim().equals("null")){
+    	  		result.setDetailDesc(desc.toString());
+      			}
 
       String agency = obj.getString("agency");
       result.setAgency(agency);
@@ -122,8 +130,10 @@ public final class Firstp2pLinkFetcher implements Fetchable
       String filename = FileUtil.downloadAvatar(instanceid, type, path, "", logo);
       result.setAvatar(instanceid, filename);
 
-      int totalnum = obj.getInt("buy_count");
-      result.setTotalNum(totalnum);
+      Object totalnum = obj.get("buy_count");
+      if(totalnum != null && !totalnum.toString().trim().equals("null")){
+    	  		result.setTotalNum(Integer.valueOf(totalnum.toString()));
+      			}
       
       String remainTime = obj.getString("remain_time");
       result.setRemainTime(remainTime);
