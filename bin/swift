@@ -85,7 +85,7 @@ if [ "$1" = "start-local" ] ; then
   fi
   while true;
   do
-    $SWIFT_HOME/bin/swift-monitor.sh $RUNJAVA -classpath $CLASSPATH $JAVA_OPTS com.ncfgroup.swift.Swift local
+    $SWIFT_HOME/bin/swift-monitor.sh $RUNJAVA -classpath $CLASSPATH $JAVA_OPTS com.ganqiang.swift.Swift local
     code=$?
     #echo "Swift is terminated and exit code is " $code
     if [ $code == 0 ]; then
@@ -103,7 +103,7 @@ elif [ "$1" = "start-remote" ] ; then
   fi
   while true;
   do
-    $SWIFT_HOME/bin/swift-monitor.sh $RUNJAVA -classpath $CLASSPATH $JAVA_OPTS com.ncfgroup.swift.Swift remote
+    $SWIFT_HOME/bin/swift-monitor.sh $RUNJAVA -classpath $CLASSPATH $JAVA_OPTS com.ganqiang.swift.Swift remote
     code=$?
     #echo "Swift is terminated and exit code is " $code
     if [ $code == 0 ]; then
@@ -129,7 +129,7 @@ elif [ "$1" = "restart-local" ] ; then
   fi
   while true;
   do
-    $SWIFT_HOME/bin/swift-monitor.sh $RUNJAVA -classpath $CLASSPATH $JAVA_OPTS com.ncfgroup.swift.Swift local
+    $SWIFT_HOME/bin/swift-monitor.sh $RUNJAVA -classpath $CLASSPATH $JAVA_OPTS com.ganqiang.swift.Swift local
     code=$?
     #echo "Swift is terminated and exit code is " $code
     if [ $code == 0 ]; then
@@ -155,7 +155,7 @@ elif [ "$1" = "restart-remote" ] ; then
   fi
   while true;
   do
-    $SWIFT_HOME/bin/swift-monitor.sh $RUNJAVA -classpath $CLASSPATH $JAVA_OPTS com.ncfgroup.swift.Swift remote
+    $SWIFT_HOME/bin/swift-monitor.sh $RUNJAVA -classpath $CLASSPATH $JAVA_OPTS com.ganqiang.swift.Swift remote
     code=$?
     #echo "Swift is terminated and exit code is " $code
     if [ $code == 0 ]; then

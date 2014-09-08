@@ -5,10 +5,13 @@
     <artifactId>swift</artifactId>
     <version>1.0-beta</version>
 
-
-
-		
     <dependencies>
+    
+	<dependency>
+		<groupId>org.apache.hbase</groupId>
+		<artifactId>hbase-client</artifactId>
+		<version>0.98.5-hadoop2</version>
+	</dependency>
     
 	<dependency>
 	  <groupId>org.apache.zookeeper</groupId>
