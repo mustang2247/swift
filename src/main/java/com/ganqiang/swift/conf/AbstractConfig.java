@@ -48,6 +48,10 @@ public abstract class AbstractConfig implements Config
   protected static final String seq_id_node = "seq_id";
   protected static final String address_node = "address";
   protected static final String total_nodes_node = "total_nodes";
+  protected static final String hbase_node = "hbase";
+  protected static final String hbase_master_node = "master";
+  protected static final String zk_quorum_node = "zk_quorum";
+  protected static final String zk_client_port_node = "zk_client_port";
   /******** xml node value ************/
   public static final String simple_server_value = "simple";
   public static final String threadpool_server_value = "threadpool";

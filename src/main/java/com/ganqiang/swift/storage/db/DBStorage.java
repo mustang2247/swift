@@ -21,7 +21,7 @@ public class DBStorage implements Process
   @Override
   public void execute(Event event)
   {
-    logger.info("Worker [" + Thread.currentThread().getName() + "] begin write detail page data.");
+    logger.info("Worker [" + Thread.currentThread().getName() + "] --- db  begin write detail page data.");
     Seed seed = (Seed) event.get(Event.seed_key);
     SiteType type = seed.getType();
     String instanceid = seed.getId();
@@ -46,7 +46,7 @@ public class DBStorage implements Process
       dbstore.writeBatch(insertdaysqls);
     }
     
-    logger.info("Worker [" + Thread.currentThread().getName() + "] end write detail page data.");
+    logger.info("Worker [" + Thread.currentThread().getName() + "] --- db  end write detail page data.");
   }
 
 }

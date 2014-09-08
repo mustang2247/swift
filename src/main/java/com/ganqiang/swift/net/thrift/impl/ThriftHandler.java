@@ -229,6 +229,9 @@ public class ThriftHandler implements SwiftController.Iface
     instance.setAddress(resource.getAddress());
     instance.setTotalNodes(resource.getTotalNodes());
     instance.setSeqId(resource.getSeqId());
+    instance.setHmaster(resource.getHmaster());
+    instance.setZkquorum(resource.getZkquorum());
+    instance.setZkclientport(resource.getZkclientport());
     return instance;
   }
   

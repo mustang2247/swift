@@ -36,7 +36,7 @@ public class Swift
       logger.error("Boot parameters not specified.");
       System.exit(1);
     }
-    
+
     if (args[0].equalsIgnoreCase("local")) {
       logger.info("Start the local mode......");
       Swift swift = new Swift();

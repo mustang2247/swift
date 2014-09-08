@@ -163,6 +163,13 @@ public class RemoteConfigHandler extends AbstractConfig implements Visitable {
 			remoteConfig.setDbPoolSize(Integer.valueOf(dbNode
 					.selectSingleNode(pool_size_node).getText().trim()));
 		}
+		
+		Node hbaseNode = storageNode.selectSingleNode(hbase_node);
+        if (hbaseNode != null) {
+            remoteConfig.setHmaster(hbaseNode.selectSingleNode(hbase_master_node) .getText());
+            remoteConfig.setZkclientport(Integer.valueOf(hbaseNode.selectSingleNode(zk_client_port_node).getText()));
+            remoteConfig.setZkquorum(hbaseNode.selectSingleNode(zk_quorum_node).getText().trim());
+        }
 
 		Node index = storageNode.selectSingleNode(index_node);
 		if (index != null) {
@@ -205,6 +212,22 @@ public class RemoteConfigHandler extends AbstractConfig implements Visitable {
 				conf.setProtocal(protocal);
 			}
 		}
+		
+		Node zkNode = swiftNode.selectSingleNode(zookeeper_node);
+        if (zkNode != null) {
+            Node addressNode = zkNode.selectSingleNode(address_node);
+            if (addressNode != null && addressNode.hasContent()) {
+                conf.setAddress(addressNode.getText().trim());
+            }
+            Node seqidNode = zkNode.selectSingleNode(seq_id_node);
+            if (seqidNode != null && seqidNode.hasContent()) {
+                conf.setSeqId(Integer.valueOf(seqidNode.getText().trim()));
+            }
+            Node totalNodesNode = zkNode.selectSingleNode(total_nodes_node);
+            if (totalNodesNode != null && totalNodesNode.hasContent()) {
+                conf.setTotalNodes(Integer.valueOf(totalNodesNode.getText().toString()));
+            }
+        }
 
 		Node storageNode = swiftNode.selectSingleNode(storage_node);
 		if (storageNode == null) {
@@ -233,6 +256,22 @@ public class RemoteConfigHandler extends AbstractConfig implements Visitable {
 				conf.setDbPoolSize(Integer.valueOf(poolsizeNode.getText()
 						.trim()));
 			}
+		}
+
+		Node hbaseNode = storageNode.selectSingleNode(hbase_node);
+		if (hbaseNode != null) {
+		    Node hmasterNode = dbNode.selectSingleNode(hbase_master_node);
+            if (hmasterNode != null && hmasterNode.hasContent()) {
+                conf.setHbaseMaster(hmasterNode.getText().trim());
+            }
+            Node zkquorumNode = dbNode.selectSingleNode(zk_quorum_node);
+            if (zkquorumNode != null && zkquorumNode.hasContent()) {
+                conf.setZkQuorum(zkquorumNode.getText().trim());
+            }
+            Node zkclientportNode = dbNode.selectSingleNode(zk_client_port_node);
+            if (zkclientportNode != null && zkclientportNode.hasContent()) {
+                conf.setZkClientPort(Integer.valueOf(zkclientportNode.getText()));
+            }
 		}
 
 		Node diskNode = storageNode.selectSingleNode(disk_node);
@@ -417,6 +456,48 @@ public class RemoteConfigHandler extends AbstractConfig implements Visitable {
 				ne.addText(tdbpoolsize.toString());
 			}
 		}
+		
+		
+		Node hbaseNode = storageNode.selectSingleNode(hbase_node);
+        String remoteHMaster = globalconfig.getHbaseMaster();
+        String remoteZkQuorum = globalconfig.getZkQuorum();
+        Integer remoteZkClientPort = globalconfig.getZkClientPort();
+        if (!StringUtil.isNullOrBlank(remoteHMaster)) {
+            Node hmasterNode = hbaseNode.selectSingleNode(hbase_master_node);
+            if (hmasterNode != null && hmasterNode.hasContent()) {
+                String hbasemaster = hmasterNode.getText().trim();
+                if (!remoteHMaster.equals(hbasemaster)) {
+                    hmasterNode.setText(remoteHMaster);
+                }
+            } else {
+                Element ne = ((Element) hbaseNode).addElement(hbase_master_node);
+                ne.addText(tdbdriver);
+            }
+        }
+        if (!StringUtil.isNullOrBlank(remoteZkQuorum)) {
+            Node zkQuorumNode = hbaseNode.selectSingleNode(zk_quorum_node);
+            if (zkQuorumNode != null && zkQuorumNode.hasContent()) {
+                String zkquorum = zkQuorumNode.getText().trim();
+                if (!remoteZkQuorum.equals(zkquorum)) {
+                    zkQuorumNode.setText(remoteZkQuorum);
+                }
+            } else {
+                Element ne = ((Element) hbaseNode).addElement(zk_quorum_node);
+                ne.addText(remoteZkQuorum);
+            }
+        }
+        if (remoteZkClientPort != null) {
+            Node zkClientPort = hbaseNode.selectSingleNode(zk_client_port_node);
+            if (zkClientPort != null && zkClientPort.hasContent()) {
+                Integer zkclientport = Integer.valueOf(zkClientPort.getText());
+                if (!remoteZkClientPort.equals(zkclientport)) {
+                    zkClientPort.setText(remoteZkClientPort.toString());
+                }
+            } else {
+                Element ne = ((Element) hbaseNode).addElement(zk_client_port_node);
+                ne.addText(remoteZkClientPort.toString());
+            }
+        }
 
 		Node diskNode = storageNode.selectSingleNode(disk_node);
 		String tdisk = globalconfig.getDisk();

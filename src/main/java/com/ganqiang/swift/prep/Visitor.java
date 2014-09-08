@@ -11,6 +11,7 @@ import com.ganqiang.swift.seed.PageSizeSettingHandler;
 import com.ganqiang.swift.seed.SeedContextHandler;
 import com.ganqiang.swift.storage.db.DBContextHandler;
 import com.ganqiang.swift.storage.disk.DiskContextHandler;
+import com.ganqiang.swift.storage.hbase.HBaseContextHandler;
 import com.ganqiang.swift.storage.index.LuceneContextHandler;
 import com.ganqiang.swift.timer.TimerContextHandler;
 
@@ -33,6 +34,8 @@ public interface Visitor
   void visitDiskContext(DiskContextHandler handler);
 
   void visitDBContext(DBContextHandler handler);
+  
+  void visitHBaseContext(HBaseContextHandler handler);
 
   void visitLuceneContext(LuceneContextHandler handler);
 

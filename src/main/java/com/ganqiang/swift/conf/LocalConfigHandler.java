@@ -343,6 +343,13 @@ public class LocalConfigHandler extends AbstractConfig implements Visitable {
 				xmlobj.setDbPoolSize(Integer.valueOf(dbNode
 						.selectSingleNode(pool_size_node).getText().trim()));
 			}
+			
+			Node hbaseNode = storageNode.selectSingleNode(hbase_node);
+            if (hbaseNode != null) {
+                xmlobj.setHmaster(hbaseNode.selectSingleNode(hbase_master_node) .getText());
+                xmlobj.setZkclientport(Integer.valueOf(hbaseNode.selectSingleNode(zk_client_port_node).getText()));
+                xmlobj.setZkquorum(hbaseNode.selectSingleNode(zk_quorum_node).getText().trim());
+            }
 
 			Node index = storageNode.selectSingleNode(index_node);
 			if (index != null) {

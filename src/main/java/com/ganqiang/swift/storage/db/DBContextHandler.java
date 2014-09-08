@@ -8,11 +8,15 @@ import com.ganqiang.swift.conf.LocalConfig.Instance;
 import com.ganqiang.swift.core.Constants;
 import com.ganqiang.swift.prep.Visitable;
 import com.ganqiang.swift.prep.Visitor;
+import com.ganqiang.swift.util.StringUtil;
 
 public class DBContextHandler implements Visitable
 {
 
   public void localInit(Instance instance){
+      if(StringUtil.isNullOrBlank(instance.getDbUrl())){
+          return;
+      }
     PoolProperties p = new PoolProperties();
     p.setUrl(instance.getDbUrl());
     p.setDriverClassName(instance.getDbDriver());
@@ -41,9 +45,12 @@ public class DBContextHandler implements Visitable
     dataSource.setPoolProperties(p);
     Constants.local_datasource_map.put(instance.getId(), dataSource);
   }
-  
+
   public void remoteInit(){
     RemoteConfig config = Constants.remote_config;
+    if(StringUtil.isNullOrBlank(config.getDbUrl())){
+        return;
+    }
     PoolProperties p = new PoolProperties();
     p.setUrl(config.getDbUrl());
     p.setDriverClassName(config.getDbDriver());

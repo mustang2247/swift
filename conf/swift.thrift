@@ -35,7 +35,10 @@ struct GlobalConfig {
   14: optional i32 dbPoolSize = 10,
   15: optional i32 seqId,
   16: optional string address,
-  17: optional i32 totalNodes
+  17: optional i32 totalNodes,
+   18: optional string hbaseMaster,
+   19: optional string zkQuorum,
+   20: optional i32 zkClientPort
 }
 
 enum JobCommand {

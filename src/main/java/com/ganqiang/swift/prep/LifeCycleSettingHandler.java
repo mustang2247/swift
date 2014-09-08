@@ -12,6 +12,7 @@ import com.ganqiang.swift.net.zk.ZKClient;
 import com.ganqiang.swift.parse.ParserDispatcher;
 import com.ganqiang.swift.seed.Seed;
 import com.ganqiang.swift.storage.db.DBStorage;
+import com.ganqiang.swift.storage.hbase.HBaseStorage;
 import com.ganqiang.swift.storage.index.LuceneIndexStorage;
 import com.ganqiang.swift.util.StringUtil;
 
@@ -32,9 +33,14 @@ public final class LifeCycleSettingHandler implements Visitable {
 				if (instance.isSync()) {
 					chain.addProcess(new FileSync());
 				}
-				chain.addProcess(new DBStorage());
+				if (!StringUtil.isNullOrBlank(instance.getDbUrl())) {
+				    chain.addProcess(new DBStorage());
+				}
+				if (!StringUtil.isNullOrBlank(instance.getZkquorum())) {
+                    chain.addProcess(new HBaseStorage());
+                }
 				if (!StringUtil.isNullOrBlank(instance.getAddress())) {
-						chain.addProcess(new ZKClient());
+					chain.addProcess(new ZKClient());
 				}
 				chain.addProcess(new Clear());
 				Constants.chain_map.put(key, chain);

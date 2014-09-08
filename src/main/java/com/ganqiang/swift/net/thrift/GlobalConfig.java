@@ -52,6 +52,9 @@ public class GlobalConfig implements org.apache.thrift.TBase<GlobalConfig, Globa
   private static final org.apache.thrift.protocol.TField SEQ_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("seqId", org.apache.thrift.protocol.TType.I32, (short)15);
   private static final org.apache.thrift.protocol.TField ADDRESS_FIELD_DESC = new org.apache.thrift.protocol.TField("address", org.apache.thrift.protocol.TType.STRING, (short)16);
   private static final org.apache.thrift.protocol.TField TOTAL_NODES_FIELD_DESC = new org.apache.thrift.protocol.TField("totalNodes", org.apache.thrift.protocol.TType.I32, (short)17);
+  private static final org.apache.thrift.protocol.TField HBASE_MASTER_FIELD_DESC = new org.apache.thrift.protocol.TField("hbaseMaster", org.apache.thrift.protocol.TType.STRING, (short)18);
+  private static final org.apache.thrift.protocol.TField ZK_QUORUM_FIELD_DESC = new org.apache.thrift.protocol.TField("zkQuorum", org.apache.thrift.protocol.TType.STRING, (short)19);
+  private static final org.apache.thrift.protocol.TField ZK_CLIENT_PORT_FIELD_DESC = new org.apache.thrift.protocol.TField("zkClientPort", org.apache.thrift.protocol.TType.I32, (short)20);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -76,6 +79,9 @@ public class GlobalConfig implements org.apache.thrift.TBase<GlobalConfig, Globa
   public int seqId; // optional
   public String address; // optional
   public int totalNodes; // optional
+  public String hbaseMaster; // optional
+  public String zkQuorum; // optional
+  public int zkClientPort; // optional
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -95,7 +101,10 @@ public class GlobalConfig implements org.apache.thrift.TBase<GlobalConfig, Globa
     DB_POOL_SIZE((short)14, "dbPoolSize"),
     SEQ_ID((short)15, "seqId"),
     ADDRESS((short)16, "address"),
-    TOTAL_NODES((short)17, "totalNodes");
+    TOTAL_NODES((short)17, "totalNodes"),
+    HBASE_MASTER((short)18, "hbaseMaster"),
+    ZK_QUORUM((short)19, "zkQuorum"),
+    ZK_CLIENT_PORT((short)20, "zkClientPort");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -144,6 +153,12 @@ public class GlobalConfig implements org.apache.thrift.TBase<GlobalConfig, Globa
           return ADDRESS;
         case 17: // TOTAL_NODES
           return TOTAL_NODES;
+        case 18: // HBASE_MASTER
+          return HBASE_MASTER;
+        case 19: // ZK_QUORUM
+          return ZK_QUORUM;
+        case 20: // ZK_CLIENT_PORT
+          return ZK_CLIENT_PORT;
         default:
           return null;
       }
@@ -190,8 +205,9 @@ public class GlobalConfig implements org.apache.thrift.TBase<GlobalConfig, Globa
   private static final int __DBPOOLSIZE_ISSET_ID = 3;
   private static final int __SEQID_ISSET_ID = 4;
   private static final int __TOTALNODES_ISSET_ID = 5;
+  private static final int __ZKCLIENTPORT_ISSET_ID = 6;
   private byte __isset_bitfield = 0;
-  private _Fields optionals[] = {_Fields.PORT,_Fields.SERVER,_Fields.PROTOCAL,_Fields.THREAD_NUM,_Fields.HTTP_PROXYS,_Fields.DISK,_Fields.IS_SYNC,_Fields.SYNC_DOMAIN,_Fields.INDEX,_Fields.DB_DRIVER,_Fields.DB_URL,_Fields.DB_USERNAME,_Fields.DB_PASSWORD,_Fields.DB_POOL_SIZE,_Fields.SEQ_ID,_Fields.ADDRESS,_Fields.TOTAL_NODES};
+  private _Fields optionals[] = {_Fields.PORT,_Fields.SERVER,_Fields.PROTOCAL,_Fields.THREAD_NUM,_Fields.HTTP_PROXYS,_Fields.DISK,_Fields.IS_SYNC,_Fields.SYNC_DOMAIN,_Fields.INDEX,_Fields.DB_DRIVER,_Fields.DB_URL,_Fields.DB_USERNAME,_Fields.DB_PASSWORD,_Fields.DB_POOL_SIZE,_Fields.SEQ_ID,_Fields.ADDRESS,_Fields.TOTAL_NODES,_Fields.HBASE_MASTER,_Fields.ZK_QUORUM,_Fields.ZK_CLIENT_PORT};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
@@ -229,6 +245,12 @@ public class GlobalConfig implements org.apache.thrift.TBase<GlobalConfig, Globa
     tmpMap.put(_Fields.ADDRESS, new org.apache.thrift.meta_data.FieldMetaData("address", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.TOTAL_NODES, new org.apache.thrift.meta_data.FieldMetaData("totalNodes", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
+    tmpMap.put(_Fields.HBASE_MASTER, new org.apache.thrift.meta_data.FieldMetaData("hbaseMaster", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.ZK_QUORUM, new org.apache.thrift.meta_data.FieldMetaData("zkQuorum", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.ZK_CLIENT_PORT, new org.apache.thrift.meta_data.FieldMetaData("zkClientPort", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(GlobalConfig.class, metaDataMap);
@@ -286,6 +308,13 @@ public class GlobalConfig implements org.apache.thrift.TBase<GlobalConfig, Globa
       this.address = other.address;
     }
     this.totalNodes = other.totalNodes;
+    if (other.isSetHbaseMaster()) {
+      this.hbaseMaster = other.hbaseMaster;
+    }
+    if (other.isSetZkQuorum()) {
+      this.zkQuorum = other.zkQuorum;
+    }
+    this.zkClientPort = other.zkClientPort;
   }
 
   public GlobalConfig deepCopy() {
@@ -317,6 +346,10 @@ public class GlobalConfig implements org.apache.thrift.TBase<GlobalConfig, Globa
     this.address = null;
     setTotalNodesIsSet(false);
     this.totalNodes = 0;
+    this.hbaseMaster = null;
+    this.zkQuorum = null;
+    setZkClientPortIsSet(false);
+    this.zkClientPort = 0;
   }
 
   public int getPort() {
@@ -736,6 +769,77 @@ public class GlobalConfig implements org.apache.thrift.TBase<GlobalConfig, Globa
     __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __TOTALNODES_ISSET_ID, value);
   }
 
+  public String getHbaseMaster() {
+    return this.hbaseMaster;
+  }
+
+  public GlobalConfig setHbaseMaster(String hbaseMaster) {
+    this.hbaseMaster = hbaseMaster;
+    return this;
+  }
+
+  public void unsetHbaseMaster() {
+    this.hbaseMaster = null;
+  }
+
+  /** Returns true if field hbaseMaster is set (has been assigned a value) and false otherwise */
+  public boolean isSetHbaseMaster() {
+    return this.hbaseMaster != null;
+  }
+
+  public void setHbaseMasterIsSet(boolean value) {
+    if (!value) {
+      this.hbaseMaster = null;
+    }
+  }
+
+  public String getZkQuorum() {
+    return this.zkQuorum;
+  }
+
+  public GlobalConfig setZkQuorum(String zkQuorum) {
+    this.zkQuorum = zkQuorum;
+    return this;
+  }
+
+  public void unsetZkQuorum() {
+    this.zkQuorum = null;
+  }
+
+  /** Returns true if field zkQuorum is set (has been assigned a value) and false otherwise */
+  public boolean isSetZkQuorum() {
+    return this.zkQuorum != null;
+  }
+
+  public void setZkQuorumIsSet(boolean value) {
+    if (!value) {
+      this.zkQuorum = null;
+    }
+  }
+
+  public int getZkClientPort() {
+    return this.zkClientPort;
+  }
+
+  public GlobalConfig setZkClientPort(int zkClientPort) {
+    this.zkClientPort = zkClientPort;
+    setZkClientPortIsSet(true);
+    return this;
+  }
+
+  public void unsetZkClientPort() {
+    __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __ZKCLIENTPORT_ISSET_ID);
+  }
+
+  /** Returns true if field zkClientPort is set (has been assigned a value) and false otherwise */
+  public boolean isSetZkClientPort() {
+    return EncodingUtils.testBit(__isset_bitfield, __ZKCLIENTPORT_ISSET_ID);
+  }
+
+  public void setZkClientPortIsSet(boolean value) {
+    __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __ZKCLIENTPORT_ISSET_ID, value);
+  }
+
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case PORT:
@@ -874,6 +978,30 @@ public class GlobalConfig implements org.apache.thrift.TBase<GlobalConfig, Globa
       }
       break;
 
+    case HBASE_MASTER:
+      if (value == null) {
+        unsetHbaseMaster();
+      } else {
+        setHbaseMaster((String)value);
+      }
+      break;
+
+    case ZK_QUORUM:
+      if (value == null) {
+        unsetZkQuorum();
+      } else {
+        setZkQuorum((String)value);
+      }
+      break;
+
+    case ZK_CLIENT_PORT:
+      if (value == null) {
+        unsetZkClientPort();
+      } else {
+        setZkClientPort((Integer)value);
+      }
+      break;
+
     }
   }
 
@@ -930,6 +1058,15 @@ public class GlobalConfig implements org.apache.thrift.TBase<GlobalConfig, Globa
     case TOTAL_NODES:
       return Integer.valueOf(getTotalNodes());
 
+    case HBASE_MASTER:
+      return getHbaseMaster();
+
+    case ZK_QUORUM:
+      return getZkQuorum();
+
+    case ZK_CLIENT_PORT:
+      return Integer.valueOf(getZkClientPort());
+
     }
     throw new IllegalStateException();
   }
@@ -975,6 +1112,12 @@ public class GlobalConfig implements org.apache.thrift.TBase<GlobalConfig, Globa
       return isSetAddress();
     case TOTAL_NODES:
       return isSetTotalNodes();
+    case HBASE_MASTER:
+      return isSetHbaseMaster();
+    case ZK_QUORUM:
+      return isSetZkQuorum();
+    case ZK_CLIENT_PORT:
+      return isSetZkClientPort();
     }
     throw new IllegalStateException();
   }
@@ -1142,6 +1285,33 @@ public class GlobalConfig implements org.apache.thrift.TBase<GlobalConfig, Globa
       if (!(this_present_totalNodes && that_present_totalNodes))
         return false;
       if (this.totalNodes != that.totalNodes)
+        return false;
+    }
+
+    boolean this_present_hbaseMaster = true && this.isSetHbaseMaster();
+    boolean that_present_hbaseMaster = true && that.isSetHbaseMaster();
+    if (this_present_hbaseMaster || that_present_hbaseMaster) {
+      if (!(this_present_hbaseMaster && that_present_hbaseMaster))
+        return false;
+      if (!this.hbaseMaster.equals(that.hbaseMaster))
+        return false;
+    }
+
+    boolean this_present_zkQuorum = true && this.isSetZkQuorum();
+    boolean that_present_zkQuorum = true && that.isSetZkQuorum();
+    if (this_present_zkQuorum || that_present_zkQuorum) {
+      if (!(this_present_zkQuorum && that_present_zkQuorum))
+        return false;
+      if (!this.zkQuorum.equals(that.zkQuorum))
+        return false;
+    }
+
+    boolean this_present_zkClientPort = true && this.isSetZkClientPort();
+    boolean that_present_zkClientPort = true && that.isSetZkClientPort();
+    if (this_present_zkClientPort || that_present_zkClientPort) {
+      if (!(this_present_zkClientPort && that_present_zkClientPort))
+        return false;
+      if (this.zkClientPort != that.zkClientPort)
         return false;
     }
 
@@ -1331,6 +1501,36 @@ public class GlobalConfig implements org.apache.thrift.TBase<GlobalConfig, Globa
         return lastComparison;
       }
     }
+    lastComparison = Boolean.valueOf(isSetHbaseMaster()).compareTo(other.isSetHbaseMaster());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetHbaseMaster()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.hbaseMaster, other.hbaseMaster);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetZkQuorum()).compareTo(other.isSetZkQuorum());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetZkQuorum()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.zkQuorum, other.zkQuorum);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetZkClientPort()).compareTo(other.isSetZkClientPort());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetZkClientPort()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.zkClientPort, other.zkClientPort);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
     return 0;
   }
 
@@ -1494,6 +1694,32 @@ public class GlobalConfig implements org.apache.thrift.TBase<GlobalConfig, Globa
       if (!first) sb.append(", ");
       sb.append("totalNodes:");
       sb.append(this.totalNodes);
+      first = false;
+    }
+    if (isSetHbaseMaster()) {
+      if (!first) sb.append(", ");
+      sb.append("hbaseMaster:");
+      if (this.hbaseMaster == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.hbaseMaster);
+      }
+      first = false;
+    }
+    if (isSetZkQuorum()) {
+      if (!first) sb.append(", ");
+      sb.append("zkQuorum:");
+      if (this.zkQuorum == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.zkQuorum);
+      }
+      first = false;
+    }
+    if (isSetZkClientPort()) {
+      if (!first) sb.append(", ");
+      sb.append("zkClientPort:");
+      sb.append(this.zkClientPort);
       first = false;
     }
     sb.append(")");
@@ -1687,6 +1913,30 @@ public class GlobalConfig implements org.apache.thrift.TBase<GlobalConfig, Globa
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
+          case 18: // HBASE_MASTER
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.hbaseMaster = iprot.readString();
+              struct.setHbaseMasterIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 19: // ZK_QUORUM
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.zkQuorum = iprot.readString();
+              struct.setZkQuorumIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 20: // ZK_CLIENT_PORT
+            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
+              struct.zkClientPort = iprot.readI32();
+              struct.setZkClientPortIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
           default:
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
         }
@@ -1816,6 +2066,25 @@ public class GlobalConfig implements org.apache.thrift.TBase<GlobalConfig, Globa
         oprot.writeI32(struct.totalNodes);
         oprot.writeFieldEnd();
       }
+      if (struct.hbaseMaster != null) {
+        if (struct.isSetHbaseMaster()) {
+          oprot.writeFieldBegin(HBASE_MASTER_FIELD_DESC);
+          oprot.writeString(struct.hbaseMaster);
+          oprot.writeFieldEnd();
+        }
+      }
+      if (struct.zkQuorum != null) {
+        if (struct.isSetZkQuorum()) {
+          oprot.writeFieldBegin(ZK_QUORUM_FIELD_DESC);
+          oprot.writeString(struct.zkQuorum);
+          oprot.writeFieldEnd();
+        }
+      }
+      if (struct.isSetZkClientPort()) {
+        oprot.writeFieldBegin(ZK_CLIENT_PORT_FIELD_DESC);
+        oprot.writeI32(struct.zkClientPort);
+        oprot.writeFieldEnd();
+      }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
@@ -1885,7 +2154,16 @@ public class GlobalConfig implements org.apache.thrift.TBase<GlobalConfig, Globa
       if (struct.isSetTotalNodes()) {
         optionals.set(16);
       }
-      oprot.writeBitSet(optionals, 17);
+      if (struct.isSetHbaseMaster()) {
+        optionals.set(17);
+      }
+      if (struct.isSetZkQuorum()) {
+        optionals.set(18);
+      }
+      if (struct.isSetZkClientPort()) {
+        optionals.set(19);
+      }
+      oprot.writeBitSet(optionals, 20);
       if (struct.isSetPort()) {
         oprot.writeI32(struct.port);
       }
@@ -1943,12 +2221,21 @@ public class GlobalConfig implements org.apache.thrift.TBase<GlobalConfig, Globa
       if (struct.isSetTotalNodes()) {
         oprot.writeI32(struct.totalNodes);
       }
+      if (struct.isSetHbaseMaster()) {
+        oprot.writeString(struct.hbaseMaster);
+      }
+      if (struct.isSetZkQuorum()) {
+        oprot.writeString(struct.zkQuorum);
+      }
+      if (struct.isSetZkClientPort()) {
+        oprot.writeI32(struct.zkClientPort);
+      }
     }
 
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, GlobalConfig struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      BitSet incoming = iprot.readBitSet(17);
+      BitSet incoming = iprot.readBitSet(20);
       if (incoming.get(0)) {
         struct.port = iprot.readI32();
         struct.setPortIsSet(true);
@@ -2025,6 +2312,18 @@ public class GlobalConfig implements org.apache.thrift.TBase<GlobalConfig, Globa
       if (incoming.get(16)) {
         struct.totalNodes = iprot.readI32();
         struct.setTotalNodesIsSet(true);
+      }
+      if (incoming.get(17)) {
+        struct.hbaseMaster = iprot.readString();
+        struct.setHbaseMasterIsSet(true);
+      }
+      if (incoming.get(18)) {
+        struct.zkQuorum = iprot.readString();
+        struct.setZkQuorumIsSet(true);
+      }
+      if (incoming.get(19)) {
+        struct.zkClientPort = iprot.readI32();
+        struct.setZkClientPortIsSet(true);
       }
     }
   }

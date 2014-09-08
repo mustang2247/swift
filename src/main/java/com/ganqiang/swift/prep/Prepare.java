@@ -22,6 +22,7 @@ import com.ganqiang.swift.seed.PageSizeSettingHandler;
 import com.ganqiang.swift.seed.SeedContextHandler;
 import com.ganqiang.swift.storage.db.DBContextHandler;
 import com.ganqiang.swift.storage.disk.DiskContextHandler;
+import com.ganqiang.swift.storage.hbase.HBaseContextHandler;
 import com.ganqiang.swift.storage.index.LuceneContextHandler;
 import com.ganqiang.swift.timer.TimerContextHandler;
 
@@ -46,6 +47,7 @@ public class Prepare implements Visitor {
 			list.add(new PageSizeSettingHandler());
 			list.add(new TimerContextHandler());
 			list.add(new DBContextHandler());
+			list.add(new HBaseContextHandler());
 			list.add(new DiskContextHandler());
 			list.add(new LuceneContextHandler());
 			list.add(new DelayContextHandler());
@@ -60,6 +62,7 @@ public class Prepare implements Visitor {
 			list.add(new HttpContextHandler());
 			list.add(new TimerContextHandler());
 			list.add(new DBContextHandler());
+			list.add(new HBaseContextHandler());
 			list.add(new SyncContextHandler());
 			break;
 		}
@@ -142,6 +145,24 @@ public class Prepare implements Visitor {
 			logger.info("setting remote db context finish.");
 		}
 	}
+	
+	@Override
+    public void visitHBaseContext(HBaseContextHandler handler) {
+	    logger.info("setting hbase context...");
+        switch (mode) {
+        case local:
+            LocalConfig lc = Constants.local_config;
+            List<Instance> list = lc.getInstances();
+            for (Instance instance : list) {
+                handler.localInit(instance);
+            }
+            logger.info("setting local hbase context finish.");
+            break;
+        case remote:
+            handler.remoteInit();
+            logger.info("setting remote hbase context finish.");
+        }
+    }
 
 	@Override
 	public void visitAll() {
@@ -232,5 +253,7 @@ public class Prepare implements Visitor {
 			logger.info("setting remote zookeeper context finish.");
 		}
 	}
+
+    
 
 }

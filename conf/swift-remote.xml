@@ -24,6 +24,11 @@
 	       <password>root</password>
 	       <pool_size>10</pool_size>
        </db>
+       <hbase>
+     		<master>localhost:600000</master>
+     		<zk_quorum>localhost</zk_quorum>
+     		<zk_client_port>2181</zk_client_port>
+     	</hbase>
        <index>
           /opt/swift/data/index
        </index>

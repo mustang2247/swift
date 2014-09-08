@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <swift>
 
-  <thread_num>1</thread_num>
+  <thread_num>3</thread_num>
 
   <instance id="instance1">
 
@@ -18,13 +18,13 @@
     </zookeeper>
     -->        
      <http_proxy>
-     					60.191.39.252:80
+     					122.96.59.106:80
      </http_proxy>
 
      <seeds>
 
        <inside is_download="false" js_support="false" use_proxy="true" delay="0">
-			     my089
+			     ppdai
        </inside>
 
     <!-- 
@@ -41,14 +41,18 @@
         <disk is_sync="false" sync_domain="http://static.p2p800.com/">
 
 		</disk>
-     	<db>
+     	<!--  db>
      	   <driver>com.mysql.jdbc.Driver</driver>
 	       <url>jdbc:mysql://localhost:3306/p2p?useUnicode=true&amp;characterEncoding=UTF-8</url>
-	       <!-- url>jdbc:mysql://10.18.6.91:3306/p2p?useUnicode=true&amp;characterEncoding=UTF-8</url -->
 	       <user_name>root</user_name>
 	       <password>root</password>
 	       <pool_size>10</pool_size>
-     	</db>
+     	</db -->
+     	<hbase>
+     		<master>localhost:600000</master>
+     		<zk_quorum>localhost</zk_quorum>
+     		<zk_client_port>2181</zk_client_port>
+     	</hbase>
      	<!--  index>
      	  /opt/swift/data/index
      	</index-->

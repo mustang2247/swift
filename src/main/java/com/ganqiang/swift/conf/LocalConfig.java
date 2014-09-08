@@ -62,7 +62,28 @@ public class LocalConfig
     private Integer seqId;
     private Integer totalNodes;
     private String address;
-    
+    private String hmaster;
+    private String zkquorum;
+    private Integer zkclientport;
+
+    public String getHmaster() {
+        return hmaster;
+    }
+    public void setHmaster(String hmaster) {
+        this.hmaster = hmaster;
+    }
+    public String getZkquorum() {
+        return zkquorum;
+    }
+    public void setZkquorum(String zkquorum) {
+        this.zkquorum = zkquorum;
+    }
+    public Integer getZkclientport() {
+        return zkclientport;
+    }
+    public void setZkclientport(Integer zkclientport) {
+        this.zkclientport = zkclientport;
+    }
     public Integer getSeqId() {
 		return seqId;
 	}

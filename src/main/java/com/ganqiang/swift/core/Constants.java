@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.hadoop.conf.Configuration;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -17,6 +18,7 @@ import com.ganqiang.swift.net.http.HttpProxy;
 import com.ganqiang.swift.net.http.HttpProxyLooper;
 import com.ganqiang.swift.seed.InsideSeed;
 import com.ganqiang.swift.seed.Seed.SiteType;
+import com.ganqiang.swift.storage.hbase.HConnectionController;
 import com.ganqiang.swift.timer.JobController;
 
 public final class Constants
@@ -45,13 +47,17 @@ public final class Constants
     }
   }
 
-  // key : instanceid  value: datasource
+  // key : instanceid  value: datasource  单机版可以有多个instance的db配置
   public static HashMap<String, DataSource> local_datasource_map = new HashMap<String, DataSource>();
   // key : instanceid  value: thrift_server
   public static HashMap<String, String> local_ts_map = new HashMap<String, String>();
+  // key : instanceid  value: hbase_config
+  public static HashMap<String, HConnectionController> local_hbase_map = new HashMap<String, HConnectionController>();
 
+  //分布式版只能有一个instance的db配置
   public static DataSource remote_datasource = new DataSource();
   public static String remote_ts = null;
+  public static HConnectionController remote_hbase = new HConnectionController();
 
   //config---------------------------------------------------------------------
   public static LocalConfig local_config = null;
@@ -130,5 +136,7 @@ public final class Constants
   public static Integer remote_seq_id = null;
   public static String remote_address = null;
   public static Integer remote_total_nodes = null;
- 
+  
+  public static final String hbase_table_name = "p2p";
+  public static final String hbase_column_family = "cf";
 }
