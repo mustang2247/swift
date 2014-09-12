@@ -11,12 +11,12 @@
   4.支持xml可配置，内置了一些网站<br /> 
   &nbsp;（注：由于某些网站内容会随时改变，具体的实现类也必须要跟着改）<br /> 
   5.多插件式集成：<br /> 
-  5.1与Zookeeper继承：维护一组Queue队列来作为分布式爬虫的每次爬取任务的结束点， <br /> 
+  5.1与Zookeeper集成：维护一组Queue队列来作为分布式爬虫的每次爬取任务的结束点， <br /> 
                                                以便全部爬虫抓取完数据时，通知给其他的任务。 <br /> 
-  5.2与HBase继承：可以将爬虫数据存放进HBase中。<br /> 
-  5.3与Lucene继承：支持创建索引。<br /> 
-  5.4与RDBMS继承：支持将爬虫数据存放进Mysql/Oracle中。<br /> 
-  5.5与Thrift继承：通过thrift接口接受swift-monitor发来的指令，还可以通过thrift接口将爬虫数据进行转发。<br />
+  5.2与HBase集成：可以将爬虫数据存放进HBase中。<br /> 
+  5.3与Lucene集成：支持创建索引。<br /> 
+  5.4与RDBMS集成：支持将爬虫数据存放进Mysql/Oracle中。<br /> 
+  5.5与Thrift集成：通过thrift接口接受swift-monitor发来的指令，还可以通过thrift接口将爬虫数据进行转发。<br />
   -----------
 
   The Current Version : 1.0-beta
