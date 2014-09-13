@@ -96,7 +96,7 @@
 		  <artifactId>IKAnalyzer</artifactId>
 		  <version>2012ff_u1</version>
 		     <scope>system</scope>
-		  <systemPath>/opt/workspace/swift/lib/IKAnalyzer2012FF_u1.jar</systemPath>
+		  <systemPath>${basedir}/lib/IKAnalyzer2012FF_u1.jar</systemPath>
 		</dependency>
 		
 		<dependency>
