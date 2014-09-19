@@ -109,7 +109,7 @@ public class PpmoneyParser implements Parsable {
 					} else if (ratedanwei.contains("日")) {
 						result.setDayRate(Double.valueOf(rate));
 					}
-					String repayLimitTime = up.get(3).text();
+					String repayLimitTime = up.get(3).text().replaceAll("投资期限: ", "");
 					result.setRepayLimitTime(repayLimitTime.replaceAll("融资期限：",
 							"").replaceAll("投资期限：", ""));
 					String rm = up.get(6).text();
@@ -155,5 +155,5 @@ public class PpmoneyParser implements Parsable {
 
 		return results;
 	}
-
+	
 }

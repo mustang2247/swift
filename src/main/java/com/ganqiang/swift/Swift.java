@@ -9,29 +9,29 @@ import com.ganqiang.swift.prep.StartupMode;
 import com.ganqiang.swift.prep.Visitor;
 import com.ganqiang.swift.timer.JobScheduler;
 
-public class Swift
-{
-  private static final Logger logger = Logger.getLogger(Swift.class);
-  private static final String log4j = System.getProperty("user.dir")+"/conf/log4j.conf";
+public class Swift {
+	private static final Logger logger = Logger.getLogger(Swift.class);
+	private static final String log4j = System.getProperty("user.dir")
+			+ "/conf/log4j.conf";
 
-  static{
-    PropertyConfigurator.configure(log4j);
-    logger.info("loading log4j.conf file...");
-  }
+	static {
+		PropertyConfigurator.configure(log4j);
+		logger.info("loading log4j.conf file...");
+	}
 
-  private void startup(StartupMode mode){
-    if (mode.equals(StartupMode.local)) {
-      Visitor visitor = new Prepare(StartupMode.local);
-      visitor.visitAll();
-      JobScheduler.localRun();
-    } else {
-      Visitor visitor = new Prepare(StartupMode.remote);
-      visitor.visitAll();
-      ThriftServer.start();
-    }
-  }
+	private void startup(StartupMode mode) {
+		if (mode.equals(StartupMode.local)) {
+			Visitor visitor = new Prepare(StartupMode.local);
+			visitor.visitAll();
+			JobScheduler.localRun();
+		} else {
+			Visitor visitor = new Prepare(StartupMode.remote);
+			visitor.visitAll();
+			ThriftServer.start();
+		}
+	}
 
-  public static void main(String... args){
+	public static void main(String... args){
     if (args == null) {
       logger.error("Boot parameters not specified.");
       System.exit(1);
@@ -47,5 +47,4 @@ public class Swift
       swift.startup(StartupMode.remote);
     }
   }
-
 }

@@ -40,7 +40,6 @@ CREATE TABLE `project` (
   `UPDATE_TIME` datetime COMMENT '更新日期'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
 DROP TABLE IF EXISTS `day_project`;
 CREATE TABLE `day_project` (
   `ID` varchar(50) NOT NULL PRIMARY KEY,

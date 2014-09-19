@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <swift>
 
-  <thread_num>3</thread_num>
+  <thread_num>1</thread_num>
 
   <instance id="instance1">
 
@@ -24,7 +24,7 @@
      <seeds>
 
        <inside is_download="false" js_support="false" use_proxy="true" delay="0">
-			     ppdai
+			            niwodai
        </inside>
 
     <!-- 

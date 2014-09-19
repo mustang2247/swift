@@ -145,24 +145,24 @@ public class Prepare implements Visitor {
 			logger.info("setting remote db context finish.");
 		}
 	}
-	
+
 	@Override
-    public void visitHBaseContext(HBaseContextHandler handler) {
-	    logger.info("setting hbase context...");
-        switch (mode) {
-        case local:
-            LocalConfig lc = Constants.local_config;
-            List<Instance> list = lc.getInstances();
-            for (Instance instance : list) {
-                handler.localInit(instance);
-            }
-            logger.info("setting local hbase context finish.");
-            break;
-        case remote:
-            handler.remoteInit();
-            logger.info("setting remote hbase context finish.");
-        }
-    }
+	public void visitHBaseContext(HBaseContextHandler handler) {
+		logger.info("setting hbase context...");
+		switch (mode) {
+		case local:
+			LocalConfig lc = Constants.local_config;
+			List<Instance> list = lc.getInstances();
+			for (Instance instance : list) {
+				handler.localInit(instance);
+			}
+			logger.info("setting local hbase context finish.");
+			break;
+		case remote:
+			handler.remoteInit();
+			logger.info("setting remote hbase context finish.");
+		}
+	}
 
 	@Override
 	public void visitAll() {
@@ -244,7 +244,7 @@ public class Prepare implements Visitor {
 			LocalConfig lc = Constants.local_config;
 			List<Instance> list = lc.getInstances();
 			for (Instance instance : list) {
-				 handler.localInit(instance);
+				handler.localInit(instance);
 			}
 			logger.info("setting local zookeeper context finish.");
 			break;
@@ -253,7 +253,5 @@ public class Prepare implements Visitor {
 			logger.info("setting remote zookeeper context finish.");
 		}
 	}
-
-    
 
 }
