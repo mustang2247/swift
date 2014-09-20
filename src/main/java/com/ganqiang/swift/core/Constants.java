@@ -131,11 +131,11 @@ public final class Constants
   public static HashMap<String, String> local_address_map = new HashMap<String, String>();
   //key： instanceid value: total_nodes
   public static HashMap<String, Integer> local_total_nodes_map = new HashMap<String, Integer>();
-  
+ 
   public static Integer remote_seq_id = null;
   public static String remote_address = null;
   public static Integer remote_total_nodes = null;
-  
+ 
   public static final String hbase_table_name = "p2p";
   public static final String hbase_column_family = "cf";
 }

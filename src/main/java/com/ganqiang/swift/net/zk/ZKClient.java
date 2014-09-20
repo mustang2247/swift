@@ -21,9 +21,9 @@ public class ZKClient implements Process{
 		}
 
 		public void initQueue(int seqid, int totalnodes) throws KeeperException, InterruptedException{
-			Stat stat = zkop.exists("/queue/start");
+			Stat stat = zkop.exists(START_PATH);
 			if(stat != null){
-				zkop.deleteAll("/queue");
+				zkop.deleteAll(PATH);
 			}
 			zkop.create(PATH);
 			zkop.joinQueue(PATH, seqid);

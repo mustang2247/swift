@@ -31,20 +31,20 @@ public class Swift {
 		}
 	}
 
-	public static void main(String... args){
-    if (args == null) {
-      logger.error("Boot parameters not specified.");
-      System.exit(1);
-    }
+	public static void main(String... args) {
+		if (args == null) {
+			logger.error("Boot parameters not specified.");
+			System.exit(1);
+		}
 
-    if (args[0].equalsIgnoreCase("local")) {
-      logger.info("Start the local mode......");
-      Swift swift = new Swift();
-      swift.startup(StartupMode.local);
-    }else if(args[0].equalsIgnoreCase("remote")){
-      logger.info("Start the remote mode......");
-      Swift swift = new Swift();
-      swift.startup(StartupMode.remote);
-    }
-  }
+		if (args[0].equalsIgnoreCase("local")) {
+			logger.info("Start the local mode......");
+			Swift swift = new Swift();
+			swift.startup(StartupMode.local);
+		} else if (args[0].equalsIgnoreCase("remote")) {
+			logger.info("Start the remote mode......");
+			Swift swift = new Swift();
+			swift.startup(StartupMode.remote);
+		}
+	}
 }
